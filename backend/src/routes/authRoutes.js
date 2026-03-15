@@ -2,10 +2,22 @@ import express from 'express';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { protect } from '../middleware/auth.js';
+import { isDatabaseReady } from '../config/db.js';
 
 const router = express.Router();
 
 const signToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET || 'dev_secret', { expiresIn: '7d' });
+
+const ensureDatabase = (res) => {
+  if (!isDatabaseReady()) {
+    res.status(503).json({
+      message: 'Database is not connected. Please configure a valid MONGO_URI and restart the server.'
+    });
+    return false;
+  }
+  return true;
+};
+
 const sanitize = (user) => ({
   _id: user._id,
   name: user.name,
@@ -16,6 +28,7 @@ const sanitize = (user) => ({
 });
 
 router.post('/register', async (req, res) => {
+  if (!ensureDatabase(res)) return;
   try {
     const { name, email, password, role = 'student', section = 'ISE 4A', designation = '' } = req.body;
     if (!name || !email || !password) {
@@ -33,6 +46,7 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
+  if (!ensureDatabase(res)) return;
   try {
     const { email, password } = req.body;
     if (!email || !password) return res.status(400).json({ message: 'Email and password are required.' });

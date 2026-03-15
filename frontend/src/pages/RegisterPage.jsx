@@ -17,7 +17,12 @@ export default function RegisterPage() {
       await register(form);
       navigate('/');
     } catch (err) {
-      setError(err.response?.data?.message || 'Account creation failed. Please verify details and try again.');
+      const message = err.response?.data?.message || 'Account creation failed. Please verify details and try again.';
+      if (message.includes('Database is not connected') || message.includes('buffering timed out')) {
+        setError('Account service is temporarily unavailable. Please ask admin to verify MongoDB Atlas (MONGO_URI) and restart backend.');
+      } else {
+        setError(message);
+      }
     } finally {
       setLoading(false);
     }
