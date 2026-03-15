@@ -15,6 +15,9 @@ import AssignmentsPage from './pages/AssignmentsPage';
 import ResourcesPage from './pages/ResourcesPage';
 import FacultyPage from './pages/FacultyPage';
 import AdaLabPage from './pages/AdaLabPage';
+import TimetablePage from './pages/TimetablePage';
+import ForumPage from './pages/ForumPage';
+import NotificationsPage from './pages/NotificationsPage';
 
 function ProtectedLayout({ children, roles }) {
   return (
@@ -31,6 +34,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/" element={<ProtectedLayout><DashboardPage /></ProtectedLayout>} />
+        <Route path="/timetable" element={<ProtectedLayout><TimetablePage /></ProtectedLayout>} />
         <Route path="/subjects" element={<ProtectedLayout><SubjectsPage /></ProtectedLayout>} />
         <Route path="/subjects/:id" element={<ProtectedLayout><SubjectDetailPage /></ProtectedLayout>} />
         <Route path="/announcements" element={<ProtectedLayout><AnnouncementsPage /></ProtectedLayout>} />
@@ -39,8 +43,10 @@ export default function App() {
         <Route path="/resources" element={<ProtectedLayout><ResourcesPage /></ProtectedLayout>} />
         <Route path="/faculty" element={<ProtectedLayout><FacultyPage /></ProtectedLayout>} />
         <Route path="/adalab" element={<ProtectedLayout><AdaLabPage /></ProtectedLayout>} />
+        <Route path="/forum" element={<ProtectedLayout><ForumPage /></ProtectedLayout>} />
+        <Route path="/notifications" element={<ProtectedLayout><NotificationsPage /></ProtectedLayout>} />
         <Route path="/marks" element={<ProtectedLayout roles={['student']}><MarksPage /></ProtectedLayout>} />
-        <Route path="/admin" element={<ProtectedLayout roles={['admin']}><AdminPage /></ProtectedLayout>} />
+        <Route path="/admin" element={<ProtectedLayout roles={['department_admin', 'hod', 'admin']}><AdminPage /></ProtectedLayout>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AuthProvider>

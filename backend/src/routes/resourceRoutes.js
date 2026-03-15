@@ -1,6 +1,7 @@
 import express from 'express';
 import multer from 'multer';
 import Resource from '../models/Resource.js';
+import Notification from '../models/Notification.js';
 import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -12,13 +13,20 @@ router.get('/', async (req, res) => {
   res.json(resources);
 });
 
-router.post('/', protect, authorize('teacher', 'admin'), upload.single('file'), async (req, res) => {
+router.post('/', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin'), upload.single('file'), async (req, res) => {
   const payload = {
     ...req.body,
     fileUrl: req.file ? `/uploads/${req.file.filename}` : req.body.fileUrl,
     uploadedBy: req.user._id
   };
   const created = await Resource.create(payload);
+  await Notification.create({
+    title: 'New Learning Resource',
+    message: `${created.title} has been uploaded.`,
+    type: 'resource',
+    recipientRole: 'all',
+    recipientSection: 'all'
+  });
   res.status(201).json(created);
 });
 

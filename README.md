@@ -1,8 +1,8 @@
-# MVJCE ISE 4th Semester Academic Hub
+# ISE Nexus – Intelligent Academic Operating System (MVJCE ISE)
 
-Production-ready full-stack monorepo for MVJCE ISE 4th semester academic workflows, including role-based authentication, smart timetable logic, assignment manager, notes library, ADA lab repository, announcements, internal marks, and smart search.
+A production-ready full-stack departmental platform with role-based experiences for Students, Teachers, Lab Instructors, Department Admin, and HOD.
 
-## Monorepo Structure
+## Repository Structure
 
 ```
 /backend
@@ -12,90 +12,60 @@ render.yaml
 README.md
 ```
 
-## Tech Stack
-- Frontend: React (Vite), TailwindCSS, React Router, Axios
-- Backend: Node.js, Express.js
-- Database: MongoDB Atlas
-- Auth: JWT + role-based access (Student / Teacher / Admin)
+## Core Capabilities
+- Smart timetable for ISE 4A and ISE 4B (today + weekly grid, current/next class, breaks, room numbers)
+- Saturday policy engine: odd Saturdays holiday, even Saturdays map to configurable weekday
+- Subject knowledge hub, notes/resource library, assignment lifecycle, ADA lab repository
+- Role-aware dashboards and analytics (student/teacher/lab instructor/admin/HOD)
+- Collaborative doubt forum with helpful answer highlighting
+- Notification center for announcements/resources/assignments
+- Faculty directory, smart search, internal marks tracker
+- PWA install support with **Install App** button and manifest/service worker
 
-## Features Included
-- Smart Timetable (ISE 4A/4B, current class, next class, break/lunch, odd/even Saturday rules with admin config)
-- Subject Dashboard (notes, PPTs, PYQs, assignments, links, ADA lab programs)
-- Notes Library (search + preview/download links)
-- Assignment Manager (create, deadlines, submit, status)
-- ADA Lab Repository (problem/program cards + code preview)
-- Faculty Information board
-- Announcement board
-- Internal marks tracker with chart
-- Smart search across subjects/resources/assignments/faculty
-- Responsive dashboard UI + dark mode toggle
+## Tech Stack
+- Frontend: React + Vite + TailwindCSS + React Router + Axios
+- Backend: Node.js + Express + Mongoose
+- Database: MongoDB Atlas
+- Auth: JWT + role-based authorization
+
+## Render Deployment
+`render.yaml` is preconfigured:
+- Build: `npm install && npm run build`
+- Start: `node backend/src/server.js`
+
+Set env vars in Render:
+- `MONGO_URI`
+- `JWT_SECRET`
 
 ## Local Setup
-
-### 1) Install dependencies
 ```bash
 npm install
 npm install --prefix backend
 npm install --prefix frontend
 ```
 
-### 2) Configure environment
 Create `backend/.env`:
 ```env
 PORT=5000
-MONGO_URI=<your_mongodb_atlas_connection_string>
+MONGO_URI=<mongodb_atlas_uri>
 JWT_SECRET=<strong_secret>
 NODE_ENV=development
 ```
 
-### 3) (Optional) Seed sample data
+Seed (official sample users and real timetable structure):
 ```bash
 npm run seed --prefix backend
 ```
-Sample users after seeding:
-- admin@mvjce.edu.in / password123
-- teacher@mvjce.edu.in / password123
-- student@mvjce.edu.in / password123
 
-### 4) Run
-Backend:
+Run:
 ```bash
 npm run dev --prefix backend
-```
-Frontend:
-```bash
 npm run dev --prefix frontend
 ```
 
-## Render Deployment (No Code Changes Required)
-This repo already includes a compatible `render.yaml`:
-- Build command: `npm install && npm run build`
-- Start command: `node backend/src/server.js`
-
-Set environment variables in Render dashboard:
-- `MONGO_URI`
-- `JWT_SECRET`
-
-`NODE_ENV=production` is configured in `render.yaml`.
-
-## Required Build Commands
-The project supports:
+## Build Validation Commands
 ```bash
 npm install
 npm run build
 npm start
 ```
-
-## API Highlights
-- `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me`
-- `GET /api/timetable/today/:section`, `PUT /api/timetable/settings/saturday`
-- `GET /api/subjects`, `GET /api/subjects/:id/dashboard`
-- `GET/POST /api/assignments`, `POST /api/assignments/:id/submit`
-- `GET/POST /api/announcements`
-- `GET /api/marks/mine`, `POST /api/marks`
-- `GET /api/resources`, `POST /api/resources`
-- `GET /api/search?q=`
-
-## Notes
-- NSS is intentionally excluded.
-- Backend gracefully starts even when `MONGO_URI` is missing (for build/runtime safety), but DB features require MongoDB Atlas.

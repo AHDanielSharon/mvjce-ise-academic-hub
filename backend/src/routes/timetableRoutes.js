@@ -26,7 +26,7 @@ router.get('/:section', async (req, res) => {
   res.json(records);
 });
 
-router.put('/:section/:day', protect, authorize('admin'), async (req, res) => {
+router.put('/:section/:day', protect, authorize('department_admin', 'hod', 'admin'), async (req, res) => {
   const { entries } = req.body;
   const doc = await Timetable.findOneAndUpdate(
     { section: req.params.section, day: req.params.day },
@@ -36,7 +36,7 @@ router.put('/:section/:day', protect, authorize('admin'), async (req, res) => {
   res.json(doc);
 });
 
-router.put('/settings/saturday', protect, authorize('admin'), async (req, res) => {
+router.put('/settings/saturday', protect, authorize('department_admin', 'hod', 'admin'), async (req, res) => {
   const { saturdayFollowDay } = req.body;
   const setting = await Setting.findOneAndUpdate(
     { key: 'saturdayFollowDay' },

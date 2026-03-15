@@ -3,10 +3,12 @@ import mongoose from 'mongoose';
 const timetableEntrySchema = new mongoose.Schema(
   {
     subject: { type: String, required: true },
+    subjectCode: String,
     faculty: String,
+    roomNumber: String,
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
-    type: { type: String, enum: ['class', 'break', 'lunch'], default: 'class' }
+    type: { type: String, enum: ['class', 'break', 'lunch', 'library', 'counselling'], default: 'class' }
   },
   { _id: false }
 );

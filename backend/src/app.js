@@ -13,6 +13,9 @@ import marksRoutes from './routes/marksRoutes.js';
 import facultyRoutes from './routes/facultyRoutes.js';
 import searchRoutes from './routes/searchRoutes.js';
 import resourceRoutes from './routes/resourceRoutes.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
+import forumRoutes from './routes/forumRoutes.js';
+import notificationRoutes from './routes/notificationRoutes.js';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
@@ -33,6 +36,9 @@ app.use('/api/marks', marksRoutes);
 app.use('/api/faculty', facultyRoutes);
 app.use('/api/search', searchRoutes);
 app.use('/api/resources', resourceRoutes);
+app.use('/api/dashboard', dashboardRoutes);
+app.use('/api/forum', forumRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 
