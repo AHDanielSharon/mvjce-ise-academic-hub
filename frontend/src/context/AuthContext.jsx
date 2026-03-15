@@ -8,12 +8,37 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+    let isMounted = true;
+    const bootstrapToken = localStorage.getItem('token');
+
+    if (!bootstrapToken) {
       setLoading(false);
-      return;
+      return () => {
+        isMounted = false;
+      };
     }
-    api.get('/auth/me').then((res) => setUser(res.data)).catch(() => localStorage.removeItem('token')).finally(() => setLoading(false));
+
+    api.get('/auth/me')
+      .then((res) => {
+        if (!isMounted) return;
+        setUser(res.data);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        // Avoid clearing a freshly-updated token from a newer successful login.
+        if (localStorage.getItem('token') === bootstrapToken) {
+          localStorage.removeItem('token');
+          setUser(null);
+        }
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   const login = async (email, password) => {

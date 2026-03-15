@@ -3,20 +3,15 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { protect } from '../middleware/auth.js';
 import { isDatabaseReady } from '../config/db.js';
+import { createOfflineUser, toOfflineSafeUser, verifyOfflineCredentials } from '../config/offlineAuth.js';
 
 const router = express.Router();
 
-const signToken = (id) => jwt.sign({ id }, process.env.JWT_SECRET || 'dev_secret', { expiresIn: '7d' });
-
-const ensureDatabase = (res) => {
-  if (!isDatabaseReady()) {
-    res.status(503).json({
-      message: 'Database is not connected. Please configure a valid MONGO_URI and restart the server.'
-    });
-    return false;
-  }
-  return true;
-};
+const signToken = ({ id, user }) => jwt.sign(
+  user ? { user } : { id },
+  process.env.JWT_SECRET || 'dev_secret',
+  { expiresIn: '7d' }
+);
 
 const sanitize = (user) => ({
   _id: user._id,
@@ -28,34 +23,51 @@ const sanitize = (user) => ({
 });
 
 router.post('/register', async (req, res) => {
-  if (!ensureDatabase(res)) return;
   try {
     const { name, email, password, role = 'student', section = 'ISE 4A', designation = '' } = req.body;
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'Name, email and password are required.' });
     }
 
+    if (!isDatabaseReady()) {
+      const offlineUser = createOfflineUser({ name, email, password, role, section, designation });
+      const publicUser = toOfflineSafeUser(offlineUser);
+      return res.status(201).json({ token: signToken({ user: publicUser }), user: publicUser, mode: 'offline' });
+    }
+
     const exists = await User.findOne({ email });
     if (exists) return res.status(400).json({ message: 'Account already exists with this email.' });
 
     const user = await User.create({ name, email, password, role, section, designation });
-    return res.status(201).json({ token: signToken(user._id), user: sanitize(user) });
+    return res.status(201).json({ token: signToken({ id: user._id }), user: sanitize(user) });
   } catch (error) {
+    if (error.message === 'Account already exists with this email.') {
+      return res.status(400).json({ message: error.message });
+    }
     return res.status(500).json({ message: error.message });
   }
 });
 
 router.post('/login', async (req, res) => {
-  if (!ensureDatabase(res)) return;
   try {
     const { email, password } = req.body;
     if (!email || !password) return res.status(400).json({ message: 'Email and password are required.' });
+
+    if (!isDatabaseReady()) {
+      const offlineUser = verifyOfflineCredentials({ email, password });
+      if (!offlineUser) {
+        return res.status(400).json({ message: 'Invalid email or password.' });
+      }
+
+      const publicUser = toOfflineSafeUser(offlineUser);
+      return res.json({ token: signToken({ user: publicUser }), user: publicUser, mode: 'offline' });
+    }
 
     const user = await User.findOne({ email });
     if (!user || !(await user.comparePassword(password))) {
       return res.status(400).json({ message: 'Invalid email or password.' });
     }
-    return res.json({ token: signToken(user._id), user: sanitize(user) });
+    return res.json({ token: signToken({ id: user._id }), user: sanitize(user) });
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
