@@ -1,0 +1,16 @@
+import express from 'express';
+import Notification from '../models/Notification.js';
+import { protect } from '../middleware/auth.js';
+
+const router = express.Router();
+
+router.get('/', protect, async (req, res) => {
+  const section = req.user.section;
+  const notifications = await Notification.find({
+    recipientSection: { $in: ['all', section] },
+    recipientRole: { $in: ['all', req.user.role] }
+  }).sort({ createdAt: -1 });
+  res.json(notifications);
+});
+
+export default router;

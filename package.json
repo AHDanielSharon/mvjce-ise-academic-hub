@@ -1,0 +1,10 @@
+{
+  "name": "mvjce-ise-academic-hub",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "npm install --prefix frontend && npm run build --prefix frontend",
+    "start": "node backend/src/server.js",
+    "postinstall": "npm install --prefix backend"
+  }
+}
