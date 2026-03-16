@@ -1,0 +1,65 @@
+[
+  {
+    "_id": "0000000000000000000000a1",
+    "name": "ISE Department Admin",
+    "email": "admin.ise@mvjce.edu.in",
+    "password": "password123",
+    "role": "department_admin",
+    "section": "ISE 4A",
+    "designation": "Department Administrator"
+  },
+  {
+    "_id": "0000000000000000000000a2",
+    "name": "Dr. HOD ISE",
+    "email": "hod.ise@mvjce.edu.in",
+    "password": "password123",
+    "role": "hod",
+    "section": "ISE 4A",
+    "designation": "Head of Department"
+  },
+  {
+    "_id": "0000000000000000000000a3",
+    "name": "Prof. Anupama P",
+    "email": "anupama.p@mvjce.edu.in",
+    "password": "password123",
+    "role": "teacher",
+    "section": "ISE 4A",
+    "designation": "Associate Professor"
+  },
+  {
+    "_id": "0000000000000000000000a4",
+    "name": "Prof. Anu K M",
+    "email": "anu.km@mvjce.edu.in",
+    "password": "password123",
+    "role": "lab_instructor",
+    "section": "ISE 4B",
+    "designation": "Lab Instructor"
+  },
+  {
+    "_id": "0000000000000000000000a5",
+    "name": "ISE Student Representative",
+    "email": "student.ise@mvjce.edu.in",
+    "password": "password123",
+    "role": "student",
+    "section": "ISE 4A",
+    "designation": "Student"
+  },
+  {
+    "_id": "0000000000000000000000a6",
+    "name": "Persist User",
+    "email": "persist.user@test.com",
+    "password": "password123",
+    "role": "student",
+    "section": "ISE 4A",
+    "designation": ""
+  },
+  {
+    "_id": "0000000000000000000000a7",
+    "name": "Persist User2",
+    "email": "persist.user2@test.com",
+    "password": "password123",
+    "role": "student",
+    "section": "ISE 4B",
+    "designation": ""
+  }
+]
