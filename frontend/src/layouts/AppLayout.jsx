@@ -24,7 +24,8 @@ export default function AppLayout({ children }) {
     { to: '/forum', label: 'Doubt Forum', icon: MessageSquare },
     { to: '/notifications', label: 'Notifications', icon: BellRing },
     { to: '/announcements', label: 'Announcements', icon: Bell },
-    { to: '/search', label: 'Smart Search', icon: Search }
+    { to: '/search', label: 'Smart Search', icon: Search },
+    ...(['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin'].includes(user?.role) ? [{ to: '/people', label: 'People Directory', icon: Users }] : [])
   ];
 
   return (
