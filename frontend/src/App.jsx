@@ -18,6 +18,7 @@ import AdaLabPage from './pages/AdaLabPage';
 import TimetablePage from './pages/TimetablePage';
 import ForumPage from './pages/ForumPage';
 import NotificationsPage from './pages/NotificationsPage';
+import PeoplePage from './pages/PeoplePage';
 
 function ProtectedLayout({ children, roles }) {
   return (
@@ -45,6 +46,7 @@ export default function App() {
         <Route path="/adalab" element={<ProtectedLayout><AdaLabPage /></ProtectedLayout>} />
         <Route path="/forum" element={<ProtectedLayout><ForumPage /></ProtectedLayout>} />
         <Route path="/notifications" element={<ProtectedLayout><NotificationsPage /></ProtectedLayout>} />
+        <Route path="/people" element={<ProtectedLayout roles={['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin']}><PeoplePage /></ProtectedLayout>} />
         <Route path="/marks" element={<ProtectedLayout roles={['student']}><MarksPage /></ProtectedLayout>} />
         <Route path="/admin" element={<ProtectedLayout roles={['department_admin', 'hod', 'admin']}><AdminPage /></ProtectedLayout>} />
         <Route path="*" element={<Navigate to="/" replace />} />

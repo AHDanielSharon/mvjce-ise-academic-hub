@@ -8,10 +8,27 @@ import Resource from '../models/Resource.js';
 import User from '../models/User.js';
 import Notification from '../models/Notification.js';
 import { protect } from '../middleware/auth.js';
+import { isDatabaseReady } from '../config/db.js';
 
 const router = express.Router();
 
 router.get('/overview', protect, async (req, res) => {
+  if (!isDatabaseReady()) {
+    if (req.user.role === 'student') {
+      return res.json({ role: 'student', announcements: [], notifications: [], assignments: [], marks: [], mode: 'offline' });
+    }
+    if (['teacher', 'lab_instructor'].includes(req.user.role)) {
+      return res.json({ role: req.user.role, announcements: [], notifications: [], assignments: [], pendingSubmissions: [], mode: 'offline' });
+    }
+    return res.json({
+      role: req.user.role,
+      announcements: [],
+      notifications: [],
+      analytics: { studentCount: 0, teacherCount: 0, assignmentStats: 0, subjectCount: 0, resourceCount: 0 },
+      mode: 'offline'
+    });
+  }
+
   const sectionFilter = req.user.section;
   const [announcements, notifications] = await Promise.all([
     Announcement.find({ audience: { $in: ['all', sectionFilter] } }).sort({ createdAt: -1 }).limit(5),
