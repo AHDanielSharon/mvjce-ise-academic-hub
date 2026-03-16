@@ -13,7 +13,7 @@ router.get('/', protect, async (req, res) => {
   res.json(announcements);
 });
 
-router.post('/', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin'), async (req, res) => {
+router.post('/', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'), async (req, res) => {
   const announcement = await Announcement.create({ ...req.body, createdBy: req.user._id });
   await Notification.create({
     title: announcement.title,

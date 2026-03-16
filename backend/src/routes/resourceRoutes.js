@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
   res.json(resources);
 });
 
-router.post('/', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin'), upload.single('file'), async (req, res) => {
+router.post('/', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'), upload.single('file'), async (req, res) => {
   const payload = {
     ...req.body,
     fileUrl: req.file ? `/uploads/${req.file.filename}` : req.body.fileUrl,

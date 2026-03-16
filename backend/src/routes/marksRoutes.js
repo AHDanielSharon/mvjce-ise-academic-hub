@@ -9,7 +9,7 @@ router.get('/mine', protect, authorize('student'), async (req, res) => {
   res.json(marks);
 });
 
-router.post('/', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin'), async (req, res) => {
+router.post('/', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'), async (req, res) => {
   const mark = await Mark.findOneAndUpdate(
     { student: req.body.student, subject: req.body.subject },
     req.body,

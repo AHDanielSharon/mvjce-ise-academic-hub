@@ -5,7 +5,14 @@ import { useAuth } from '../context/AuthContext';
 export default function RegisterPage() {
   const { register } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ name: '', email: '', password: '', role: 'student', section: 'ISE 4A', designation: '' });
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    role: 'student',
+    section: 'ISE 4A',
+    designation: ''
+  });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -18,11 +25,7 @@ export default function RegisterPage() {
       navigate('/');
     } catch (err) {
       const message = err.response?.data?.message || 'Account creation failed. Please verify details and try again.';
-      if (message.includes('Database is not connected') || message.includes('buffering timed out')) {
-        setError('Account service is temporarily unavailable. Please ask admin to verify MongoDB Atlas (MONGO_URI) and restart backend.');
-      } else {
-        setError(message);
-      }
+      setError(message);
     } finally {
       setLoading(false);
     }
@@ -42,6 +45,8 @@ export default function RegisterPage() {
           <option value="lab_instructor">Lab Instructor</option>
           <option value="department_admin">Department Admin</option>
           <option value="hod">HOD</option>
+          <option value="admin">Admin</option>
+          <option value="principal">Principal</option>
         </select>
         <select value={form.section} className="w-full rounded-xl border p-2" onChange={(e) => setForm({ ...form, section: e.target.value })}>
           <option>ISE 4A</option><option>ISE 4B</option>
