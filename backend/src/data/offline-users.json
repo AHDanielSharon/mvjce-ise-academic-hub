@@ -43,23 +43,5 @@
     "role": "student",
     "section": "ISE 4A",
     "designation": "Student"
-  },
-  {
-    "_id": "0000000000000000000000a6",
-    "name": "Persist User",
-    "email": "persist.user@test.com",
-    "password": "password123",
-    "role": "student",
-    "section": "ISE 4A",
-    "designation": ""
-  },
-  {
-    "_id": "0000000000000000000000a7",
-    "name": "Persist User2",
-    "email": "persist.user2@test.com",
-    "password": "password123",
-    "role": "student",
-    "section": "ISE 4B",
-    "designation": ""
   }
 ]

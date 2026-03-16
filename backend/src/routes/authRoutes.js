@@ -34,15 +34,14 @@ const roleMatchesPortal = (role, portal) => {
 
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, section = 'ISE 4A', designation = '' } = req.body;
+    const { name, email, password, role = 'student', section = 'ISE 4A', designation = '' } = req.body;
     const normalizedEmail = normalizeEmail(email);
 
     if (!name || !normalizedEmail || !password) {
       return res.status(400).json({ message: 'Name, email and password are required.' });
     }
 
-    // Public self-registration is always student to prevent role escalation.
-    const payload = { name, email: normalizedEmail, password, role: 'student', section, designation };
+    const payload = { name, email: normalizedEmail, password, role, section, designation };
 
     if (!isDatabaseReady()) {
       const offlineUser = createOfflineUser(payload);
