@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/client';
 
-const uploaderRoles = ['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin'];
+const uploaderRoles = ['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'];
 
 export default function ResourcesPage() {
   const { user } = useAuth();

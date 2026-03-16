@@ -40,7 +40,7 @@ router.get('/:section', async (req, res) => {
   return res.json(records);
 });
 
-router.put('/:section/:day', protect, authorize('department_admin', 'hod', 'admin'), async (req, res) => {
+router.put('/:section/:day', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'), async (req, res) => {
   if (!isDatabaseReady()) return res.status(503).json({ message: 'Timetable updates require database connection.' });
   const { entries } = req.body;
   const doc = await Timetable.findOneAndUpdate(
@@ -51,7 +51,7 @@ router.put('/:section/:day', protect, authorize('department_admin', 'hod', 'admi
   return res.json(doc);
 });
 
-router.put('/settings/saturday', protect, authorize('department_admin', 'hod', 'admin'), async (req, res) => {
+router.put('/settings/saturday', protect, authorize('department_admin', 'hod', 'admin', 'principal'), async (req, res) => {
   if (!isDatabaseReady()) return res.status(503).json({ message: 'Settings update requires database connection.' });
   const { saturdayFollowDay } = req.body;
   const setting = await Setting.findOneAndUpdate(

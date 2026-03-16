@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: '', password: '', portal: 'student' });
+  const [form, setForm] = useState({ email: '', password: '', portal: 'any' });
   const [error, setError] = useState('');
 
   const onSubmit = async (e) => {
@@ -25,6 +25,7 @@ export default function LoginPage() {
         <h1 className="text-2xl font-bold">Welcome to ISE Nexus</h1>
         <p className="text-sm text-slate-500">Choose your portal and sign in with the same role you selected during account creation.</p>
         <select className="w-full rounded-xl border p-2" value={form.portal} onChange={(e) => setForm({ ...form, portal: e.target.value })}>
+          <option value="any">Auto-detect (Recommended)</option>
           <option value="student">Student Portal</option>
           <option value="teacher">Teacher Portal</option>
           <option value="management">Management Portal</option>

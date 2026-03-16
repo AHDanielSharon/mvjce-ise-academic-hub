@@ -46,6 +46,7 @@ export default function RegisterPage() {
           <option value="department_admin">Department Admin</option>
           <option value="hod">HOD</option>
           <option value="admin">Admin</option>
+          <option value="principal">Principal</option>
         </select>
         <select value={form.section} className="w-full rounded-xl border p-2" onChange={(e) => setForm({ ...form, section: e.target.value })}>
           <option>ISE 4A</option><option>ISE 4B</option>

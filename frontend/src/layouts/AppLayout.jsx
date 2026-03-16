@@ -25,7 +25,7 @@ export default function AppLayout({ children }) {
     { to: '/notifications', label: 'Notifications', icon: BellRing },
     { to: '/announcements', label: 'Announcements', icon: Bell },
     { to: '/search', label: 'Smart Search', icon: Search },
-    ...(['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin'].includes(user?.role) ? [{ to: '/people', label: 'People Directory', icon: Users }] : [])
+    ...(['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'].includes(user?.role) ? [{ to: '/people', label: 'People Directory', icon: Users }] : [])
   ];
 
   return (
@@ -63,8 +63,8 @@ export default function AppLayout({ children }) {
                 <item.icon size={16} /> {item.label}
               </NavLink>
             ))}
-            {(user?.role === 'department_admin' || user?.role === 'hod' || user?.role === 'admin') && (
-              <NavLink to="/admin" className="flex rounded-xl px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Admin & Governance</NavLink>
+            {(user?.role === 'teacher' || user?.role === 'lab_instructor' || user?.role === 'department_admin' || user?.role === 'hod' || user?.role === 'admin' || user?.role === 'principal') && (
+              <NavLink to="/admin" className="flex rounded-xl px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Academic Controls</NavLink>
             )}
             {user?.role === 'student' && <NavLink to="/marks" className="flex rounded-xl px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-800">Performance Tracker</NavLink>}
           </nav>

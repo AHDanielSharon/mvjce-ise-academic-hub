@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 
 const DEMO_PASSWORD = process.env.OFFLINE_DEMO_PASSWORD || 'password123';
 
-const roleAllowList = ['student', 'teacher', 'lab_instructor', 'department_admin', 'hod', 'admin'];
+const roleAllowList = ['student', 'teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'];
 const sectionAllowList = ['ISE 4A', 'ISE 4B'];
 
 const sanitizeRole = (role) => (roleAllowList.includes(role) ? role : 'student');
@@ -53,6 +53,7 @@ const addOfflineUser = ({ _id, name, email, password, role = 'student', section 
 const defaultOfflineUsers = [
   { _id: '0000000000000000000000a1', name: 'ISE Department Admin', email: 'admin.ise@mvjce.edu.in', role: 'department_admin', section: 'ISE 4A', designation: 'Department Administrator' },
   { _id: '0000000000000000000000a2', name: 'Dr. HOD ISE', email: 'hod.ise@mvjce.edu.in', role: 'hod', section: 'ISE 4A', designation: 'Head of Department' },
+  { _id: '0000000000000000000000a6', name: 'Principal MVJCE', email: 'principal@mvjce.edu.in', role: 'principal', section: 'ISE 4A', designation: 'Principal' },
   { _id: '0000000000000000000000a3', name: 'Prof. Anupama P', email: 'anupama.p@mvjce.edu.in', role: 'teacher', section: 'ISE 4A', designation: 'Associate Professor' },
   { _id: '0000000000000000000000a4', name: 'Prof. Anu K M', email: 'anu.km@mvjce.edu.in', role: 'lab_instructor', section: 'ISE 4B', designation: 'Lab Instructor' },
   { _id: '0000000000000000000000a5', name: 'ISE Student Representative', email: 'student.ise@mvjce.edu.in', role: 'student', section: 'ISE 4A', designation: 'Student' }

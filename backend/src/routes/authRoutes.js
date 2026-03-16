@@ -28,7 +28,7 @@ const roleMatchesPortal = (role, portal) => {
   if (!portal || portal === 'any') return true;
   if (portal === 'student') return role === 'student';
   if (portal === 'teacher') return ['teacher', 'lab_instructor'].includes(role);
-  if (portal === 'management') return ['department_admin', 'hod', 'admin'].includes(role);
+  if (portal === 'management') return ['department_admin', 'hod', 'admin', 'principal'].includes(role);
   return true;
 };
 

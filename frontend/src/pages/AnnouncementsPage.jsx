@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../api/client';
 
-const posterRoles = ['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin'];
+const posterRoles = ['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'];
 
 export default function AnnouncementsPage() {
   const { user } = useAuth();

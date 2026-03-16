@@ -18,6 +18,15 @@
     "designation": "Head of Department"
   },
   {
+    "_id": "0000000000000000000000a6",
+    "name": "Principal MVJCE",
+    "email": "principal@mvjce.edu.in",
+    "password": "password123",
+    "role": "principal",
+    "section": "ISE 4A",
+    "designation": "Principal"
+  },
+  {
     "_id": "0000000000000000000000a3",
     "name": "Prof. Anupama P",
     "email": "anupama.p@mvjce.edu.in",
