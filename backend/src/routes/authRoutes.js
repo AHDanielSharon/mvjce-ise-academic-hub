@@ -24,6 +24,14 @@ const sanitize = (user) => ({
   designation: user.designation
 });
 
+const roleMatchesPortal = (role, portal) => {
+  if (!portal || portal === 'any') return true;
+  if (portal === 'student') return role === 'student';
+  if (portal === 'teacher') return ['teacher', 'lab_instructor'].includes(role);
+  if (portal === 'management') return ['department_admin', 'hod', 'admin'].includes(role);
+  return true;
+};
+
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, section = 'ISE 4A', designation = '' } = req.body;
@@ -58,13 +66,16 @@ router.post('/register', async (req, res) => {
 router.post('/login', async (req, res) => {
   try {
     const normalizedEmail = normalizeEmail(req.body.email);
-    const { password } = req.body;
+    const { password, portal = 'any' } = req.body;
     if (!normalizedEmail || !password) return res.status(400).json({ message: 'Email and password are required.' });
 
     if (!isDatabaseReady()) {
       const offlineUser = verifyOfflineCredentials({ email: normalizedEmail, password });
       if (!offlineUser) {
         return res.status(400).json({ message: 'Invalid email or password.' });
+      }
+      if (!roleMatchesPortal(offlineUser.role, portal)) {
+        return res.status(403).json({ message: `This account is not allowed in the ${portal} portal.` });
       }
 
       const publicUser = toOfflineSafeUser(offlineUser);
@@ -75,6 +86,10 @@ router.post('/login', async (req, res) => {
     if (!user || !(await user.comparePassword(password))) {
       return res.status(400).json({ message: 'Invalid email or password.' });
     }
+    if (!roleMatchesPortal(user.role, portal)) {
+      return res.status(403).json({ message: `This account is not allowed in the ${portal} portal.` });
+    }
+
     return res.json({ token: signToken({ id: user._id }), user: sanitize(user) });
   } catch (error) {
     return res.status(500).json({ message: error.message });
