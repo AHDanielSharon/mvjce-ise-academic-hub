@@ -4,21 +4,12 @@ import Setting from '../models/Setting.js';
 import { protect, authorize } from '../middleware/auth.js';
 import { getCurrentAndNextClass, getEffectiveDay } from '../utils/timetable.js';
 import { isDatabaseReady } from '../config/db.js';
+import { offlineData } from '../config/offlineAcademicData.js';
 
 const router = express.Router();
 
 router.get('/today/:section', async (req, res) => {
-  if (!isDatabaseReady()) {
-    return res.json({
-      day: getEffectiveDay(new Date(), 'Friday'),
-      holiday: false,
-      entries: [],
-      currentClass: null,
-      nextClass: null,
-      saturdayFollowDay: 'Friday',
-      mode: 'offline'
-    });
-  }
+  if (!isDatabaseReady()) return res.json(offlineData.getTodayTimetable(req.params.section));
 
   const section = req.params.section;
   const config = await Setting.findOne({ key: 'saturdayFollowDay' });
@@ -35,14 +26,14 @@ router.get('/today/:section', async (req, res) => {
 });
 
 router.get('/:section', async (req, res) => {
-  if (!isDatabaseReady()) return res.json([]);
+  if (!isDatabaseReady()) return res.json(offlineData.getWeeklyTimetable(req.params.section));
   const records = await Timetable.find({ section: req.params.section }).sort({ day: 1 });
   return res.json(records);
 });
 
 router.put('/:section/:day', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'), async (req, res) => {
-  if (!isDatabaseReady()) return res.status(503).json({ message: 'Timetable updates require database connection.' });
   const { entries } = req.body;
+  if (!isDatabaseReady()) return res.json(offlineData.setDayTimetable(req.params.section, req.params.day, entries || []));
   const doc = await Timetable.findOneAndUpdate(
     { section: req.params.section, day: req.params.day },
     { entries },
@@ -52,8 +43,8 @@ router.put('/:section/:day', protect, authorize('teacher', 'lab_instructor', 'de
 });
 
 router.put('/settings/saturday', protect, authorize('department_admin', 'hod', 'admin', 'principal'), async (req, res) => {
-  if (!isDatabaseReady()) return res.status(503).json({ message: 'Settings update requires database connection.' });
   const { saturdayFollowDay } = req.body;
+  if (!isDatabaseReady()) return res.json(offlineData.setSaturdayFollowDay(saturdayFollowDay));
   const setting = await Setting.findOneAndUpdate(
     { key: 'saturdayFollowDay' },
     { value: saturdayFollowDay },
@@ -63,7 +54,7 @@ router.put('/settings/saturday', protect, authorize('department_admin', 'hod', '
 });
 
 router.get('/settings/saturday/value', async (_req, res) => {
-  if (!isDatabaseReady()) return res.json({ saturdayFollowDay: 'Friday', mode: 'offline' });
+  if (!isDatabaseReady()) return res.json({ saturdayFollowDay: offlineData.getSaturdayFollowDay(), mode: 'offline' });
   const setting = await Setting.findOne({ key: 'saturdayFollowDay' });
   return res.json({ saturdayFollowDay: setting?.value || 'Friday' });
 });
