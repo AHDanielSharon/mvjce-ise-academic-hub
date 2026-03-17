@@ -795,26 +795,7 @@
       ]
     }
   },
-  "resources": [
-    {
-      "_id": "0000000000000000000000cb",
-      "title": "Teacher Shared Notes",
-      "type": "notes",
-      "subject": "000000000000000000000201",
-      "description": "desc",
-      "linkUrl": "https://example.com/notes",
-      "uploadedBy": "0000000000000000000000a3",
-      "createdAt": "2026-03-17T13:20:19.652Z"
-    },
-    {
-      "_id": "000000000000000000000301",
-      "subject": "000000000000000000000201",
-      "type": "notes",
-      "title": "ADA Unit 1 Notes",
-      "description": "Asymptotic analysis and complexity.",
-      "linkUrl": "https://example.com/ada-unit-1"
-    }
-  ],
+  "resources": [],
   "announcements": [
     {
       "_id": "000000000000000000000401",
@@ -852,5 +833,9 @@
       "status": "submitted",
       "feedback": ""
     }
-  ]
+  ],
+  "timetableImages": {
+    "ISE 4A": "",
+    "ISE 4B": ""
+  }
 }

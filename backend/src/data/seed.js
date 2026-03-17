@@ -196,15 +196,6 @@ const runSeed = async () => {
     audience: 'all'
   });
 
-  await Resource.create({
-    subject: subjects[0]._id,
-    type: 'notes',
-    title: 'ADA Asymptotic Analysis Notes',
-    description: 'Official module notes curated by ISE faculty.',
-    linkUrl: 'https://example.com/ise-nexus/ada-notes',
-    uploadedBy: teacher._id
-  });
-
   await ForumPost.create({
     title: 'How to optimize Dijkstra using priority queue?',
     question: 'Can someone explain complexity improvement with adjacency list + heap?',

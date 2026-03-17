@@ -53,16 +53,8 @@ const buildDefaultStore = () => ({
       Friday: defaultEntries
     }
   },
-  resources: [
-    {
-      _id: '000000000000000000000301',
-      subject: '000000000000000000000201',
-      type: 'notes',
-      title: 'ADA Unit 1 Notes',
-      description: 'Asymptotic analysis and complexity.',
-      linkUrl: 'https://example.com/ada-unit-1'
-    }
-  ],
+  timetableImages: { 'ISE 4A': '', 'ISE 4B': '' },
+  resources: [],
   announcements: [
     {
       _id: '000000000000000000000401',
@@ -98,8 +90,13 @@ const load = () => {
 load();
 
 export const offlineData = {
-  getSubjects: () => store.subjects,
-  getFaculty: () => store.subjects.map((s) => ({ _id: s._id, name: s.name, facultyName: s.facultyName, designation: s.designation, department: s.department, section: s.section })),
+  getSubjects: (section) => section ? store.subjects.filter((s) => (Array.isArray(s.section) ? s.section.includes(section) : s.section === section)) : store.subjects,
+  getFaculty: (section) => {
+    const cc = { 'ISE 4A': 'Prof. Anupama P', 'ISE 4B': 'Prof. Anu K M' };
+    const rows = (section ? store.subjects.filter((s) => (Array.isArray(s.section) ? s.section.includes(section) : s.section === section)) : store.subjects)
+      .map((s) => ({ _id: s._id, name: s.facultyName, facultyName: s.facultyName, designation: s.designation, department: s.department, section: Array.isArray(s.section) ? s.section[0] : s.section, subjects: [s.name] }));
+    return rows.map((r) => ({ ...r, isClassCoordinator: cc[r.section] === r.facultyName }));
+  },
   getSubjectDashboard: (subjectId) => {
     const grouped = {};
     for (const r of store.resources.filter((x) => x.subject === subjectId)) {
@@ -124,6 +121,13 @@ export const offlineData = {
     store.timetable[section][day] = entries;
     save();
     return { section, day, entries };
+  },
+  getTimetableImage: (section) => (store.timetableImages || {})[section] || '',
+  setTimetableImage: (section, imageUrl) => {
+    if (!store.timetableImages) store.timetableImages = {};
+    store.timetableImages[section] = imageUrl;
+    save();
+    return imageUrl;
   },
   getSaturdayFollowDay: () => store.settings.saturdayFollowDay || 'Friday',
   setSaturdayFollowDay: (value) => {

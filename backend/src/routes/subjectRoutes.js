@@ -6,9 +6,12 @@ import { offlineData } from '../config/offlineAcademicData.js';
 
 const router = express.Router();
 
-router.get('/', async (_req, res) => {
-  if (!isDatabaseReady()) return res.json(offlineData.getSubjects());
-  const subjects = await Subject.find().sort({ name: 1 });
+router.get('/', async (req, res) => {
+  const { section } = req.query;
+  if (!isDatabaseReady()) return res.json(offlineData.getSubjects(section));
+
+  const query = section ? { section } : {};
+  const subjects = await Subject.find(query).sort({ name: 1 });
   return res.json(subjects);
 });
 

@@ -5,14 +5,18 @@ import { useAuth } from '../context/AuthContext';
 const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 const canEditRoles = ['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'];
 
+const emptyEntry = { subject: '', startTime: '08:00', endTime: '08:50', roomNumber: '', faculty: '', type: 'class' };
+
 export default function TimetablePage() {
   const { user } = useAuth();
   const [selectedSection, setSelectedSection] = useState('ISE 4A');
   const [weekly, setWeekly] = useState([]);
   const [today, setToday] = useState(null);
   const [editorDay, setEditorDay] = useState('Monday');
-  const [entriesJson, setEntriesJson] = useState('[]');
+  const [editableEntries, setEditableEntries] = useState([]);
   const [status, setStatus] = useState('');
+  const [timetableImage, setTimetableImage] = useState('');
+  const [imageFile, setImageFile] = useState(null);
 
   const canEdit = canEditRoles.includes(user?.role);
 
@@ -25,6 +29,7 @@ export default function TimetablePage() {
     if (!selectedSection) return;
     api.get(`/timetable/${selectedSection}`).then((res) => setWeekly(res.data));
     api.get(`/timetable/today/${selectedSection}`).then((res) => setToday(res.data));
+    api.get(`/timetable/image/${selectedSection}`).then((res) => setTimetableImage(res.data.imageUrl || ''));
   };
 
   useEffect(() => {
@@ -34,31 +39,48 @@ export default function TimetablePage() {
   const byDay = useMemo(() => Object.fromEntries(weekly.map((d) => [d.day, d.entries])), [weekly]);
 
   useEffect(() => {
-    setEntriesJson(JSON.stringify(byDay[editorDay] || [], null, 2));
+    setEditableEntries((byDay[editorDay] || []).map((entry) => ({ ...entry })));
   }, [byDay, editorDay]);
+
+  const updateEntry = (index, key, value) => {
+    setEditableEntries((prev) => prev.map((item, i) => (i === index ? { ...item, [key]: value } : item)));
+  };
+
+  const addRow = () => setEditableEntries((prev) => [...prev, { ...emptyEntry }]);
+  const deleteRow = (index) => setEditableEntries((prev) => prev.filter((_, i) => i !== index));
 
   const saveDay = async () => {
     setStatus('');
-    const parsed = JSON.parse(entriesJson);
-    await api.put(`/timetable/${selectedSection}/${editorDay}`, { entries: parsed });
+    await api.put(`/timetable/${selectedSection}/${editorDay}`, { entries: editableEntries });
     setStatus(`Updated ${selectedSection} • ${editorDay} timetable.`);
     load();
+  };
+
+  const saveImage = async () => {
+    if (!imageFile) return;
+    const payload = new FormData();
+    payload.append('file', imageFile);
+    const { data } = await api.put(`/timetable/image/${selectedSection}`, payload, { headers: { 'Content-Type': 'multipart/form-data' } });
+    setTimetableImage(data.imageUrl || '');
+    setImageFile(null);
+    setStatus(`Uploaded timetable image for ${selectedSection}.`);
   };
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-2xl font-bold">Smart Timetable • {selectedSection}</h1>
-        <select
-          className="rounded-xl border p-2"
-          value={selectedSection}
-          onChange={(e) => setSelectedSection(e.target.value)}
-          disabled={user?.role === 'student'}
-        >
-          <option>ISE 4A</option>
-          <option>ISE 4B</option>
+        <select className="rounded-xl border p-2" value={selectedSection} onChange={(e) => setSelectedSection(e.target.value)} disabled={user?.role === 'student'}>
+          <option>ISE 4A</option><option>ISE 4B</option>
         </select>
       </div>
+
+      {timetableImage && (
+        <section className="card">
+          <h2 className="mb-2 font-semibold">Uploaded Timetable</h2>
+          <img src={timetableImage} alt={`Timetable ${selectedSection}`} className="max-h-[420px] rounded-xl border" />
+        </section>
+      )}
 
       <section className="card">
         <h2 className="mb-2 font-semibold">Today's View ({today?.day || '-'})</h2>
@@ -75,36 +97,32 @@ export default function TimetablePage() {
         )}
       </section>
 
-      <section className="card overflow-auto">
-        <h2 className="mb-2 font-semibold">Weekly Grid View</h2>
-        <div className="grid min-w-[920px] grid-cols-5 gap-3">
-          {days.map((day) => (
-            <div key={day}>
-              <h3 className="mb-2 rounded-lg bg-slate-100 px-2 py-1 text-sm font-semibold dark:bg-slate-800">{day}</h3>
-              <div className="space-y-2">
-                {(byDay[day] || []).map((entry, idx) => (
-                  <div key={`${entry.startTime}-${idx}`} className="rounded-lg border border-slate-200 p-2 text-xs dark:border-slate-700">
-                    <p className="font-semibold">{entry.subject}</p>
-                    <p>{entry.startTime} - {entry.endTime}</p>
-                    {entry.roomNumber && <p>{entry.roomNumber}</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {canEdit && (
-        <section className="card">
-          <h2 className="mb-2 font-semibold">Teacher/Management Timetable Editor</h2>
-          <div className="mb-2 flex flex-wrap gap-2">
+        <section className="card space-y-2">
+          <h2 className="font-semibold">Teacher Timetable Update (No Coding)</h2>
+          <div className="flex flex-wrap gap-2">
             <select className="rounded-xl border p-2" value={editorDay} onChange={(e) => setEditorDay(e.target.value)}>
               {days.map((day) => <option key={day}>{day}</option>)}
             </select>
+            <button type="button" onClick={addRow} className="rounded-xl border px-3 py-2">Add Row</button>
             <button type="button" onClick={saveDay} className="rounded-xl bg-brand-500 px-4 py-2 text-white">Save Day Timetable</button>
           </div>
-          <textarea className="min-h-[220px] w-full rounded-xl border p-2 font-mono text-xs" value={entriesJson} onChange={(e) => setEntriesJson(e.target.value)} />
+          <div className="space-y-2">
+            {editableEntries.map((entry, index) => (
+              <div key={`${index}-${entry.startTime}`} className="grid gap-2 rounded-xl border p-2 md:grid-cols-6">
+                <input className="rounded border p-2" placeholder="Subject" value={entry.subject || ''} onChange={(e) => updateEntry(index, 'subject', e.target.value)} />
+                <input className="rounded border p-2" placeholder="Faculty" value={entry.faculty || ''} onChange={(e) => updateEntry(index, 'faculty', e.target.value)} />
+                <input className="rounded border p-2" placeholder="Room" value={entry.roomNumber || ''} onChange={(e) => updateEntry(index, 'roomNumber', e.target.value)} />
+                <input type="time" className="rounded border p-2" value={entry.startTime || '08:00'} onChange={(e) => updateEntry(index, 'startTime', e.target.value)} />
+                <input type="time" className="rounded border p-2" value={entry.endTime || '08:50'} onChange={(e) => updateEntry(index, 'endTime', e.target.value)} />
+                <button type="button" className="rounded border px-3 py-2" onClick={() => deleteRow(index)}>Remove</button>
+              </div>
+            ))}
+          </div>
+          <div className="grid gap-2 md:grid-cols-[1fr_auto]">
+            <input type="file" accept="image/*" className="rounded-xl border p-2" onChange={(e) => setImageFile(e.target.files?.[0] || null)} />
+            <button type="button" onClick={saveImage} className="rounded-xl bg-brand-500 px-4 py-2 text-white">Upload Timetable Image</button>
+          </div>
           {status && <p className="mt-2 text-sm text-green-600">{status}</p>}
         </section>
       )}
