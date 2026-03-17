@@ -54,12 +54,19 @@ export const approvedStudents = [
   { usn: '1MVJ24IS057', name: 'NANDINI R', section: 'ISE 4A' }
 ];
 
-const normalize = (v = '') => v.trim().replace(/\s+/g, ' ').toUpperCase();
+const normalizeName = (v = '') => v.trim().replace(/\s+/g, ' ').toUpperCase();
+export const normalizeUsn = (v = '') => v.trim().replace(/\s+/g, '').toUpperCase().replace(/^1MVJ/, '1MJ');
+
+export const getApprovedStudentByUsn = (usn) => {
+  const nUsn = normalizeUsn(usn);
+  return approvedStudents.find((s) => normalizeUsn(s.usn) === nUsn) || null;
+};
 
 export const getApprovedStudent = ({ usn, name }) => {
-  const nUsn = normalize(usn);
-  const nName = normalize(name);
-  return approvedStudents.find((s) => s.usn === nUsn && normalize(s.name) === nName) || null;
+  const nName = normalizeName(name);
+  const match = getApprovedStudentByUsn(usn);
+  if (!match) return null;
+  return normalizeName(match.name) === nName ? match : null;
 };
 
 export const makeStudentSignature = (name = '') => `✍ ${name}`;

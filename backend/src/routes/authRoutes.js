@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
 import { protect } from '../middleware/auth.js';
 import { isDatabaseReady } from '../config/db.js';
-import { createOfflineUser, toOfflineSafeUser, upsertOfflineStudent, verifyOfflineCredentials } from '../config/offlineAuth.js';
-import { getApprovedStudent, makeStudentSignature } from '../config/studentRegistry.js';
+import { createOfflineUser, findOfflineUserByUsn, toOfflineSafeUser, verifyOfflineCredentials, verifyOfflineStudentCredentials } from '../config/offlineAuth.js';
+import { getApprovedStudent, getApprovedStudentByUsn, makeStudentSignature, normalizeUsn } from '../config/studentRegistry.js';
 
 const router = express.Router();
 
@@ -15,7 +15,6 @@ const signToken = ({ id, user }) => jwt.sign(
 );
 
 const normalizeEmail = (email = '') => email.trim().toLowerCase();
-const normalizeUsn = (usn = '') => usn.trim().toUpperCase();
 
 const sanitize = (user) => ({
   _id: user._id,
@@ -36,60 +35,58 @@ const roleMatchesPortal = (role, portal) => {
   return true;
 };
 
-const authenticateApprovedStudent = async ({ name, usn }) => {
-  const approved = getApprovedStudent({ name, usn });
-  if (!approved) return null;
-
-  const signature = makeStudentSignature(approved.name);
-
-  if (!isDatabaseReady()) {
-    const offlineUser = upsertOfflineStudent({
-      name: approved.name,
-      usn: approved.usn,
-      section: approved.section,
-      signature
-    });
-    return { mode: 'offline', user: toOfflineSafeUser(offlineUser) };
-  }
-
-  const existing = await User.findOne({ usn: normalizeUsn(approved.usn), role: 'student' });
-  if (existing) {
-    existing.name = approved.name;
-    existing.section = approved.section;
-    existing.signature = signature;
-    await existing.save();
-    return { mode: 'db', user: sanitize(existing) };
-  }
-
-  const syntheticEmail = `${approved.usn.toLowerCase()}@mvjce.student`;
-  const created = await User.create({
-    name: approved.name,
-    usn: approved.usn,
-    signature,
-    role: 'student',
-    section: approved.section,
-    designation: 'Student',
-    email: syntheticEmail,
-    password: `${approved.usn.toLowerCase()}@2026`
-  });
-  return { mode: 'db', user: sanitize(created) };
-};
-
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, role = 'student', section = 'ISE 4A', designation = '', usn = '' } = req.body;
 
     if (role === 'student') {
-      if (!name || !usn) return res.status(400).json({ message: 'Student name and USN are required.' });
-      const result = await authenticateApprovedStudent({ name, usn });
-      if (!result) return res.status(400).json({ message: 'Student not found in approved ISE 4A list. Please enter exact Name and USN.' });
-      return res.status(201).json({ token: signToken({ user: result.user }), user: result.user, mode: result.mode, autoLogin: true });
+      if (!name || !usn || !password) return res.status(400).json({ message: 'Student name, USN and password are required.' });
+      if ((password || '').length < 6) return res.status(400).json({ message: 'Password must be at least 6 characters.' });
+
+      const approved = getApprovedStudent({ name, usn });
+      if (!approved) return res.status(400).json({ message: 'Student not found in approved ISE 4A list. Please enter exact Name and USN.' });
+
+      const canonicalUsn = normalizeUsn(approved.usn);
+      const signature = makeStudentSignature(approved.name);
+
+      if (!isDatabaseReady()) {
+        const existing = findOfflineUserByUsn(canonicalUsn);
+        if (existing) return res.status(400).json({ message: 'Student account already created. Please login with USN + password.' });
+
+        const syntheticEmail = `${canonicalUsn.toLowerCase()}@mvjce.student`;
+        const offlineUser = createOfflineUser({
+          name: approved.name,
+          email: syntheticEmail,
+          password,
+          role: 'student',
+          section: approved.section,
+          designation: 'Student',
+          usn: canonicalUsn,
+          signature
+        });
+        const publicUser = toOfflineSafeUser(offlineUser);
+        return res.status(201).json({ token: signToken({ user: publicUser }), user: publicUser, mode: 'offline', autoLogin: true });
+      }
+
+      const exists = await User.findOne({ usn: canonicalUsn, role: 'student' });
+      if (exists) return res.status(400).json({ message: 'Student account already created. Please login with USN + password.' });
+
+      const syntheticEmail = `${canonicalUsn.toLowerCase()}@mvjce.student`;
+      const user = await User.create({
+        name: approved.name,
+        usn: canonicalUsn,
+        signature,
+        role: 'student',
+        section: approved.section,
+        designation: 'Student',
+        email: syntheticEmail,
+        password
+      });
+      return res.status(201).json({ token: signToken({ id: user._id }), user: sanitize(user), autoLogin: true });
     }
 
     const normalizedEmail = normalizeEmail(email);
-    if (!name || !normalizedEmail || !password) {
-      return res.status(400).json({ message: 'Name, email and password are required.' });
-    }
+    if (!name || !normalizedEmail || !password) return res.status(400).json({ message: 'Name, email and password are required.' });
 
     const payload = { name, email: normalizedEmail, password, role, section, designation };
 
@@ -105,32 +102,42 @@ router.post('/register', async (req, res) => {
     const user = await User.create(payload);
     return res.status(201).json({ token: signToken({ id: user._id }), user: sanitize(user) });
   } catch (error) {
-    if (error.message === 'Account already exists with this email.') {
-      return res.status(400).json({ message: error.message });
-    }
+    if (error.message === 'Account already exists with this email.') return res.status(400).json({ message: error.message });
     return res.status(500).json({ message: error.message });
   }
 });
 
 router.post('/login', async (req, res) => {
   try {
-    const { portal = 'any', name = '', usn = '' } = req.body;
+    const { portal = 'any', usn = '', password = '' } = req.body;
 
     if (portal === 'student' || usn) {
-      const result = await authenticateApprovedStudent({ name, usn });
-      if (!result) return res.status(400).json({ message: 'Invalid student Name/USN. Enter exactly as approved list.' });
-      return res.json({ token: signToken({ user: result.user }), user: result.user, mode: result.mode, autoLogin: true });
+      if (!usn || !password) return res.status(400).json({ message: 'USN and password are required for student login.' });
+      const approvedByUsn = getApprovedStudentByUsn(usn);
+      if (!approvedByUsn) return res.status(400).json({ message: 'Invalid student USN.' });
+
+      const canonicalUsn = normalizeUsn(approvedByUsn.usn);
+
+      if (!isDatabaseReady()) {
+        const offlineUser = verifyOfflineStudentCredentials({ usn: canonicalUsn, password });
+        if (!offlineUser) return res.status(400).json({ message: 'Invalid USN or password.' });
+        return res.json({ token: signToken({ user: toOfflineSafeUser(offlineUser) }), user: toOfflineSafeUser(offlineUser), mode: 'offline' });
+      }
+
+      const user = await User.findOne({ usn: canonicalUsn, role: 'student' });
+      if (!user) return res.status(400).json({ message: 'Student account not found. Please create account first.' });
+      if (!(await user.comparePassword(password))) return res.status(400).json({ message: 'Invalid USN or password.' });
+
+      return res.json({ token: signToken({ id: user._id }), user: sanitize(user) });
     }
 
     const normalizedEmail = normalizeEmail(req.body.email);
-    const { password } = req.body;
     if (!normalizedEmail || !password) return res.status(400).json({ message: 'Email and password are required.' });
 
     if (!isDatabaseReady()) {
       const offlineUser = verifyOfflineCredentials({ email: normalizedEmail, password });
       if (!offlineUser) return res.status(400).json({ message: 'Invalid email or password.' });
       if (!roleMatchesPortal(offlineUser.role, portal)) return res.status(403).json({ message: `This account is not allowed in the ${portal} portal.` });
-
       const publicUser = toOfflineSafeUser(offlineUser);
       return res.json({ token: signToken({ user: publicUser }), user: publicUser, mode: 'offline' });
     }
