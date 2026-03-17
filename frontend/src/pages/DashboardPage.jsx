@@ -19,6 +19,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-4">
       <h1 className="text-2xl font-bold">Intelligent Personal Dashboard</h1>
+      <p className="text-sm text-slate-500">Signed in portal: <span className="font-semibold">{user?.role?.replace('_', ' ')}</span> • Section {user?.section}</p>
       <div className="grid gap-4 md:grid-cols-3">
         <section className="card md:col-span-2">
           <h2 className="mb-2 font-semibold">Today's timetable ({timetable?.day || '-'})</h2>

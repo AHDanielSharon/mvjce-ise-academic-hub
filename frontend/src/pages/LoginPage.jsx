@@ -5,13 +5,14 @@ import { useAuth } from '../context/AuthContext';
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
-  const [form, setForm] = useState({ email: '', password: '' });
+  const [form, setForm] = useState({ email: '', password: '', portal: 'any' });
   const [error, setError] = useState('');
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setError('');
     try {
-      await login(form.email, form.password);
+      await login(form.email, form.password, form.portal);
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Unable to login');
@@ -22,8 +23,15 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <form className="card w-full max-w-md space-y-4" onSubmit={onSubmit}>
         <h1 className="text-2xl font-bold">Welcome to ISE Nexus</h1>
-        <input className="w-full rounded-xl border p-2" placeholder="Email" onChange={(e) => setForm({ ...form, email: e.target.value })} />
-        <input type="password" className="w-full rounded-xl border p-2" placeholder="Password" onChange={(e) => setForm({ ...form, password: e.target.value })} />
+        <p className="text-sm text-slate-500">Choose your portal and sign in with the same role you selected during account creation.</p>
+        <select className="w-full rounded-xl border p-2" value={form.portal} onChange={(e) => setForm({ ...form, portal: e.target.value })}>
+          <option value="any">Auto-detect (Recommended)</option>
+          <option value="student">Student Portal</option>
+          <option value="teacher">Teacher Portal</option>
+          <option value="management">Management Portal</option>
+        </select>
+        <input className="w-full rounded-xl border p-2" placeholder="Email" value={form.email} onChange={(e) => setForm({ ...form, email: e.target.value })} />
+        <input type="password" className="w-full rounded-xl border p-2" placeholder="Password" value={form.password} onChange={(e) => setForm({ ...form, password: e.target.value })} />
         {error && <p className="text-sm text-red-600">{error}</p>}
         <button type="submit" className="w-full rounded-xl bg-brand-500 p-2 text-white">Sign In</button>
         <p className="text-sm">New here? <Link className="text-brand-600" to="/register">Create account</Link></p>
