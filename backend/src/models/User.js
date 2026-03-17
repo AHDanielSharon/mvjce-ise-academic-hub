@@ -12,7 +12,9 @@ const userSchema = new mongoose.Schema(
       default: 'student'
     },
     section: { type: String, enum: ['ISE 4A', 'ISE 4B'], default: 'ISE 4A' },
-    designation: { type: String, default: '' }
+    designation: { type: String, default: '' },
+    usn: { type: String, uppercase: true, trim: true, sparse: true },
+    signature: { type: String, default: '' }
   },
   { timestamps: true }
 );

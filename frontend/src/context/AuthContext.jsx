@@ -13,9 +13,7 @@ export function AuthProvider({ children }) {
 
     if (!bootstrapToken) {
       setLoading(false);
-      return () => {
-        isMounted = false;
-      };
+      return () => { isMounted = false; };
     }
 
     api.get('/auth/me')
@@ -25,7 +23,6 @@ export function AuthProvider({ children }) {
       })
       .catch(() => {
         if (!isMounted) return;
-        // Avoid clearing a freshly-updated token from a newer successful login.
         if (localStorage.getItem('token') === bootstrapToken) {
           localStorage.removeItem('token');
           setUser(null);
@@ -36,13 +33,14 @@ export function AuthProvider({ children }) {
         setLoading(false);
       });
 
-    return () => {
-      isMounted = false;
-    };
+    return () => { isMounted = false; };
   }, []);
 
-  const login = async (email, password, portal = 'any') => {
-    const { data } = await api.post('/auth/login', { email, password, portal });
+  const login = async (payloadOrEmail, password, portal = 'any') => {
+    const payload = typeof payloadOrEmail === 'object'
+      ? payloadOrEmail
+      : { email: payloadOrEmail, password, portal };
+    const { data } = await api.post('/auth/login', payload);
     localStorage.setItem('token', data.token);
     setUser(data.user);
   };

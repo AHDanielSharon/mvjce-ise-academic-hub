@@ -10,6 +10,7 @@ const sectionAllowList = ['ISE 4A', 'ISE 4B'];
 const sanitizeRole = (role) => (roleAllowList.includes(role) ? role : 'student');
 const sanitizeSection = (section) => (sectionAllowList.includes(section) ? section : 'ISE 4A');
 const normalizeEmail = (email = '') => email.trim().toLowerCase();
+const normalizeUsn = (usn = '') => usn.trim().toUpperCase();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -28,7 +29,7 @@ const persistOfflineUsers = () => {
   fs.writeFileSync(offlineUsersPath, JSON.stringify(allUsers, null, 2), 'utf-8');
 };
 
-const addOfflineUser = ({ _id, name, email, password, role = 'student', section = 'ISE 4A', designation = '' }, persist = true) => {
+const addOfflineUser = ({ _id, name, email, password, role = 'student', section = 'ISE 4A', designation = '', usn = '', signature = '' }, persist = true) => {
   const normalizedEmail = normalizeEmail(email);
   const user = {
     _id,
@@ -37,7 +38,9 @@ const addOfflineUser = ({ _id, name, email, password, role = 'student', section 
     password,
     role: sanitizeRole(role),
     section: sanitizeSection(section),
-    designation: designation || ''
+    designation: designation || '',
+    usn: normalizeUsn(usn),
+    signature
   };
   offlineUsers.set(normalizedEmail, user);
 
@@ -86,10 +89,20 @@ export const toOfflineSafeUser = (user) => ({
   email: user.email,
   role: user.role,
   section: user.section,
-  designation: user.designation
+  designation: user.designation,
+  usn: user.usn,
+  signature: user.signature
 });
 
 export const findOfflineUserByEmail = (email) => offlineUsers.get(normalizeEmail(email));
+
+export const findOfflineUserByUsn = (usn) => {
+  const needle = normalizeUsn(usn);
+  for (const user of offlineUsers.values()) {
+    if ((user.usn || '') === needle) return user;
+  }
+  return null;
+};
 
 export const findOfflineUserById = (id) => {
   for (const user of offlineUsers.values()) {
@@ -98,7 +111,7 @@ export const findOfflineUserById = (id) => {
   return null;
 };
 
-export const createOfflineUser = ({ name, email, password, role, section, designation }) => {
+export const createOfflineUser = ({ name, email, password, role, section, designation, usn = '', signature = '' }) => {
   const normalizedEmail = normalizeEmail(email);
   if (offlineUsers.has(normalizedEmail)) {
     throw new Error('Account already exists with this email.');
@@ -111,15 +124,36 @@ export const createOfflineUser = ({ name, email, password, role, section, design
     password,
     role,
     section,
-    designation
+    designation,
+    usn,
+    signature
   });
 };
+
+export const upsertOfflineStudent = ({ name, usn, section = 'ISE 4A', signature = '' }) => {
+  const existing = findOfflineUserByUsn(usn);
+  if (existing) {
+    const updated = { ...existing, name, section, signature };
+    addOfflineUser(updated, true);
+    return updated;
+  }
+  const syntheticEmail = `${normalizeUsn(usn).toLowerCase()}@mvjce.student`;
+  return createOfflineUser({
+    name,
+    email: syntheticEmail,
+    password: DEMO_PASSWORD,
+    role: 'student',
+    section,
+    designation: 'Student',
+    usn,
+    signature
+  });
+};
+
+export const listOfflineUsers = () => [...offlineUsers.values()].map(toOfflineSafeUser);
 
 export const verifyOfflineCredentials = ({ email, password }) => {
   const user = findOfflineUserByEmail(email);
   if (!user || user.password !== password) return null;
   return user;
 };
-
-
-export const listOfflineUsers = () => [...offlineUsers.values()].map(toOfflineSafeUser);
