@@ -2,6 +2,7 @@ import express from 'express';
 import multer from 'multer';
 import Timetable from '../models/Timetable.js';
 import Setting from '../models/Setting.js';
+import Notification from '../models/Notification.js';
 import { protect, authorize } from '../middleware/auth.js';
 import { getCurrentAndNextClass, getEffectiveDay } from '../utils/timetable.js';
 import { isDatabaseReady } from '../config/db.js';
@@ -73,6 +74,13 @@ router.put('/:section/:day', protect, authorize('teacher', 'lab_instructor', 'de
     { entries },
     { upsert: true, new: true }
   );
+  await Notification.create({
+    title: 'Timetable Updated',
+    message: `Timetable updated for ${req.params.section} on ${req.params.day}.`,
+    type: 'timetable',
+    recipientRole: 'student',
+    recipientSection: req.params.section
+  });
   return res.json(doc);
 });
 

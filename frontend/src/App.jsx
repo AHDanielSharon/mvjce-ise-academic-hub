@@ -47,7 +47,7 @@ export default function App() {
         <Route path="/forum" element={<ProtectedLayout><ForumPage /></ProtectedLayout>} />
         <Route path="/notifications" element={<ProtectedLayout><NotificationsPage /></ProtectedLayout>} />
         <Route path="/people" element={<ProtectedLayout roles={['department_admin', 'hod', 'admin', 'principal']}><PeoplePage /></ProtectedLayout>} />
-        <Route path="/marks" element={<ProtectedLayout roles={['student']}><MarksPage /></ProtectedLayout>} />
+        <Route path="/marks" element={<ProtectedLayout><MarksPage /></ProtectedLayout>} />
         <Route path="/admin" element={<ProtectedLayout roles={['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal']}><AdminPage /></ProtectedLayout>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

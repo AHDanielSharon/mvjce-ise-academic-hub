@@ -66,7 +66,9 @@ const buildDefaultStore = () => ({
     }
   ],
   assignments: [],
-  submissions: []
+  submissions: [],
+  marks: [],
+  notifications: []
 });
 
 let store = buildDefaultStore();
@@ -88,6 +90,22 @@ const load = () => {
 };
 
 load();
+
+const addNotification = ({ title, message, type = 'system', recipientRole = 'all', recipientSection = 'all' }) => {
+  const item = {
+    _id: makeId(),
+    title,
+    message,
+    type,
+    recipientRole,
+    recipientSection,
+    createdAt: new Date().toISOString()
+  };
+  if (!store.notifications) store.notifications = [];
+  store.notifications.unshift(item);
+  save();
+  return item;
+};
 
 export const offlineData = {
   getSubjects: (section) => section ? store.subjects.filter((s) => (Array.isArray(s.section) ? s.section.includes(section) : s.section === section)) : store.subjects,
@@ -120,6 +138,7 @@ export const offlineData = {
     if (!store.timetable[section]) store.timetable[section] = {};
     store.timetable[section][day] = entries;
     save();
+    addNotification({ title: 'Timetable Updated', message: `Timetable updated for ${section} on ${day}.`, type: 'timetable', recipientRole: 'student', recipientSection: section });
     return { section, day, entries };
   },
   getTimetableImage: (section) => (store.timetableImages || {})[section] || '',
@@ -144,8 +163,42 @@ export const offlineData = {
     const item = { _id: makeId(), ...payload, uploadedBy: user._id, createdAt: new Date().toISOString() };
     store.resources.unshift(item);
     save();
+    addNotification({ title: 'New Learning Resource', message: `${item.title} has been uploaded.`, type: 'resource', recipientRole: 'student', recipientSection: 'all' });
     return item;
   },
+  getAllMarks: (section) => {
+    const subjectMap = new Map(store.subjects.map((s) => [s._id, s]));
+    const marks = store.marks || [];
+    return marks
+      .filter((m) => !section || m.studentSection === section)
+      .map((m) => ({ ...m, subject: subjectMap.get(m.subject) || { _id: m.subject, name: 'Unknown Subject' }, student: { _id: m.student, name: m.studentName, section: m.studentSection } }));
+  },
+  getMyMarks: (user) => {
+    const subjectMap = new Map(store.subjects.map((s) => [s._id, s]));
+    return (store.marks || [])
+      .filter((m) => m.student === user._id && m.published)
+      .map((m) => ({ ...m, subject: subjectMap.get(m.subject) || { _id: m.subject, name: 'Unknown Subject' } }));
+  },
+  upsertMark: (payload) => {
+    if (!store.marks) store.marks = [];
+    const idx = store.marks.findIndex((m) => m.student === payload.student && m.subject === payload.subject);
+    const base = idx >= 0 ? store.marks[idx] : { _id: makeId(), student: payload.student, subject: payload.subject, studentName: payload.studentName, studentSection: payload.studentSection };
+    const item = {
+      ...base,
+      ia1: Number(payload.ia1 || 0),
+      ia2: Number(payload.ia2 || 0),
+      ia3: Number(payload.ia3 || 0),
+      sem: Number(payload.sem || 0),
+      published: Boolean(payload.published),
+      total: Number(payload.ia1 || 0) + Number(payload.ia2 || 0) + Number(payload.ia3 || 0) + Number(payload.sem || 0),
+      updatedAt: new Date().toISOString()
+    };
+    if (idx >= 0) store.marks[idx] = item; else store.marks.unshift(item);
+    save();
+    if (item.published) addNotification({ title: 'Exam Result Published', message: 'Your latest internal/semester result has been published.', type: 'result', recipientRole: 'student', recipientSection: item.studentSection || 'all' });
+    return item;
+  },
+  getNotifications: (user) => (store.notifications || []).filter((n) => (n.recipientRole === 'all' || n.recipientRole === user.role) && (n.recipientSection === 'all' || n.recipientSection === user.section)),
   getAssignments: (user) => {
     const list = user.role === 'student' ? store.assignments.filter((a) => a.section === user.section) : store.assignments;
     const subjectMap = new Map(store.subjects.map((s) => [s._id, s]));
@@ -155,6 +208,7 @@ export const offlineData = {
     const item = { _id: makeId(), ...payload, createdBy: user._id, createdAt: new Date().toISOString() };
     store.assignments.unshift(item);
     save();
+    addNotification({ title: 'New Assignment Published', message: `${item.title} has been posted for ${item.section}.`, type: 'assignment', recipientRole: 'student', recipientSection: item.section || 'all' });
     return item;
   },
   submitAssignment: (assignmentId, user, fileUrl) => {
@@ -198,10 +252,10 @@ export const offlineData = {
     return { subjects, notes, assignments, faculty };
   },
   getOverview: (user) => {
-    const notifications = store.announcements.slice(0, 5).map((a) => ({ _id: a._id, title: a.title }));
+    const notifications = (store.notifications || []).slice(0, 10);
     if (user.role === 'student') {
       const announcements = store.announcements.filter((a) => a.audience === 'all' || a.audience === user.section);
-      return { role: 'student', announcements, notifications, assignments: store.assignments.filter((a) => a.section === user.section), marks: [], mode: 'offline' };
+      return { role: 'student', announcements, notifications, assignments: store.assignments.filter((a) => a.section === user.section), marks: offlineData.getMyMarks(user), mode: 'offline' };
     }
     if (['teacher', 'lab_instructor'].includes(user.role)) {
       const announcements = store.announcements.filter((a) => a.audience === 'all' || a.audience === user.section);

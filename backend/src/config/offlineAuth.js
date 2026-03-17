@@ -120,3 +120,6 @@ export const verifyOfflineCredentials = ({ email, password }) => {
   if (!user || user.password !== password) return null;
   return user;
 };
+
+
+export const listOfflineUsers = () => [...offlineUsers.values()].map(toOfflineSafeUser);
