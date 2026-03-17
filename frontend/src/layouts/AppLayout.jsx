@@ -25,7 +25,7 @@ export default function AppLayout({ children }) {
     { to: '/notifications', label: 'Notifications', icon: BellRing },
     { to: '/announcements', label: 'Announcements', icon: Bell },
     { to: '/search', label: 'Smart Search', icon: Search },
-    ...(['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'].includes(user?.role) ? [{ to: '/people', label: 'People Directory', icon: Users }] : [])
+    ...(['department_admin', 'hod', 'admin', 'principal'].includes(user?.role) ? [{ to: '/people', label: 'People Directory', icon: Users }] : [])
   ];
 
   return (

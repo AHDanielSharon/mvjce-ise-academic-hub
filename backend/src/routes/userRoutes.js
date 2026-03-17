@@ -4,7 +4,7 @@ import { protect, authorize } from '../middleware/auth.js';
 
 const router = express.Router();
 
-router.get('/', protect, authorize('teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal'), async (_req, res) => {
+router.get('/', protect, authorize('department_admin', 'hod', 'admin', 'principal'), async (_req, res) => {
   const users = await User.find({}).select('name email role section designation createdAt').sort({ role: 1, name: 1 });
 
   const grouped = {
