@@ -1,0 +1,454 @@
+{
+  "settings": {
+    "saturdayFollowDay": "Friday"
+  },
+  "subjects": [
+    {
+      "_id": "000000000000000000000201",
+      "name": "Analysis & Design of Algorithms",
+      "code": "MVJ22IS41",
+      "facultyName": "Dr. Kumar R",
+      "designation": "Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000202",
+      "name": "Advanced Java",
+      "code": "MVJ22IS42",
+      "facultyName": "Prof. Kavitha C S",
+      "designation": "Associate Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000203",
+      "name": "Database Management Systems",
+      "code": "MVJ22IS43",
+      "facultyName": "Dr. Sinsha P S",
+      "designation": "Associate Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000204",
+      "name": "Discrete Mathematical Structures",
+      "code": "MVJ22IS451",
+      "facultyName": "Prof. Kucheruva Madhu",
+      "designation": "Professor",
+      "department": "Maths",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000205",
+      "name": "Biology for Engineers",
+      "code": "MVJ22BI47",
+      "facultyName": "Prof. Nandana R",
+      "designation": "Assistant Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000206",
+      "name": "Universal Human Values",
+      "code": "MVJ22UHV48",
+      "facultyName": "Prof. Nandana R",
+      "designation": "Assistant Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000207",
+      "name": "AEC Vertical Level II",
+      "code": "MVJ22AXYYL",
+      "facultyName": "Dr. Shreevarsha",
+      "designation": "Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000208",
+      "name": "Analysis & Design of Algorithms Lab",
+      "code": "MVJ22ISL44",
+      "facultyName": "Prof. Anu K M",
+      "designation": "Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    }
+  ],
+  "timetable": {
+    "ISE 4A": {
+      "Monday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ],
+      "Tuesday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ],
+      "Wednesday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ],
+      "Thursday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ],
+      "Friday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ]
+    },
+    "ISE 4B": {
+      "Monday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ],
+      "Tuesday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ],
+      "Wednesday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ],
+      "Thursday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ],
+      "Friday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Advanced Java",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "roomNumber": "R049"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "roomNumber": "R049"
+        }
+      ]
+    }
+  },
+  "resources": [
+    {
+      "_id": "000000000000000000000301",
+      "subject": "000000000000000000000201",
+      "type": "notes",
+      "title": "ADA Unit 1 Notes",
+      "description": "Asymptotic analysis and complexity.",
+      "linkUrl": "https://example.com/ada-unit-1"
+    }
+  ],
+  "announcements": [
+    {
+      "_id": "000000000000000000000401",
+      "title": "Welcome to ISE Nexus",
+      "content": "Platform is active for students and faculty.",
+      "audience": "all",
+      "createdAt": "2026-03-17T00:00:00.000Z",
+      "createdBy": {
+        "name": "Department Admin",
+        "role": "department_admin"
+      }
+    }
+  ],
+  "assignments": [],
+  "submissions": []
+}
