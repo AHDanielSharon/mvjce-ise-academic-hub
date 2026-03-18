@@ -1,0 +1,844 @@
+{
+  "settings": {
+    "saturdayFollowDay": "Friday"
+  },
+  "subjects": [
+    {
+      "_id": "000000000000000000000201",
+      "name": "Analysis & Design of Algorithms",
+      "code": "MVJ22IS41",
+      "facultyName": "Dr. Kumar R",
+      "designation": "Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000202",
+      "name": "Advanced Java",
+      "code": "MVJ22IS42",
+      "facultyName": "Prof. Kavitha C S",
+      "designation": "Associate Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000203",
+      "name": "Database Management Systems",
+      "code": "MVJ22IS43",
+      "facultyName": "Dr. Sinsha P S",
+      "designation": "Associate Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000204",
+      "name": "Discrete Mathematical Structures",
+      "code": "MVJ22IS451",
+      "facultyName": "Prof. Kucheruva Madhu",
+      "designation": "Professor",
+      "department": "Maths",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000205",
+      "name": "Biology for Engineers",
+      "code": "MVJ22BI47",
+      "facultyName": "Prof. Nandana R",
+      "designation": "Assistant Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000206",
+      "name": "Universal Human Values",
+      "code": "MVJ22UHV48",
+      "facultyName": "Prof. Nandana R",
+      "designation": "Assistant Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000207",
+      "name": "AEC Vertical Level II",
+      "code": "MVJ22AXYYL",
+      "facultyName": "Dr. Shreevarsha",
+      "designation": "Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    },
+    {
+      "_id": "000000000000000000000208",
+      "name": "Analysis & Design of Algorithms Lab",
+      "code": "MVJ22ISL44",
+      "facultyName": "Prof. Anu K M",
+      "designation": "Professor",
+      "department": "ISE",
+      "section": [
+        "ISE 4A",
+        "ISE 4B"
+      ]
+    }
+  ],
+  "timetable": {
+    "ISE 4A": {
+      "Monday": [
+        {
+          "subject": "Teacher Updated Slot",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "roomNumber": "R500"
+        }
+      ],
+      "Tuesday": [
+        {
+          "subject": "Database Management Systems",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Prof. Anupama P",
+          "roomNumber": "R049",
+          "startTime": "08:00",
+          "endTime": "08:50"
+        },
+        {
+          "subject": "Universal Human Values",
+          "subjectCode": "MVJ22UHV48",
+          "faculty": "Prof. Nandana R",
+          "roomNumber": "R049",
+          "startTime": "08:50",
+          "endTime": "09:40"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Advanced Java (B2)",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Venkatesh G",
+          "roomNumber": "R049",
+          "startTime": "10:10",
+          "endTime": "11:00"
+        },
+        {
+          "subject": "Analysis & Design of Algorithms Lab (B1)",
+          "subjectCode": "MVJ22ISL44",
+          "faculty": "Prof. Anu K M",
+          "roomNumber": "ADA-227",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "type": "lab"
+        },
+        {
+          "subject": "Break",
+          "startTime": "11:50",
+          "endTime": "12:00",
+          "type": "break"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "subjectCode": "MVJ22IS451",
+          "faculty": "Prof. Kucheruva Madhu",
+          "roomNumber": "R049",
+          "startTime": "12:00",
+          "endTime": "12:50"
+        },
+        {
+          "subject": "Lunch Break",
+          "startTime": "12:50",
+          "endTime": "13:40",
+          "type": "lunch"
+        },
+        {
+          "subject": "AEC Vertical Level II",
+          "subjectCode": "MVJ22AXYYL",
+          "faculty": "Dr. Shreevarsha",
+          "roomNumber": "R049",
+          "startTime": "13:40",
+          "endTime": "14:30"
+        },
+        {
+          "subject": "Advanced Java",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Venkatesh G",
+          "roomNumber": "R049",
+          "startTime": "14:30",
+          "endTime": "15:20"
+        }
+      ],
+      "Wednesday": [
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "subjectCode": "MVJ22IS41",
+          "faculty": "Prof. Anu K M",
+          "roomNumber": "R049",
+          "startTime": "08:00",
+          "endTime": "08:50"
+        },
+        {
+          "subject": "Database Management Systems (R)",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Prof. Anupama P",
+          "roomNumber": "R049",
+          "startTime": "08:50",
+          "endTime": "09:40"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Prof. Anupama P",
+          "roomNumber": "R049",
+          "startTime": "10:10",
+          "endTime": "11:00"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "subjectCode": "MVJ22IS451",
+          "faculty": "Prof. Kucheruva Madhu",
+          "roomNumber": "R049",
+          "startTime": "11:00",
+          "endTime": "11:50"
+        },
+        {
+          "subject": "Break",
+          "startTime": "11:50",
+          "endTime": "12:00",
+          "type": "break"
+        },
+        {
+          "subject": "Advanced Java",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Venkatesh G",
+          "roomNumber": "R049",
+          "startTime": "12:00",
+          "endTime": "12:50"
+        },
+        {
+          "subject": "Lunch Break",
+          "startTime": "12:50",
+          "endTime": "13:40",
+          "type": "lunch"
+        },
+        {
+          "subject": "Library",
+          "roomNumber": "Library",
+          "startTime": "13:40",
+          "endTime": "14:30",
+          "type": "library"
+        },
+        {
+          "subject": "Biology for Engineers",
+          "subjectCode": "MVJ22BI47",
+          "faculty": "Prof. Nandana R",
+          "roomNumber": "R049",
+          "startTime": "14:30",
+          "endTime": "15:20"
+        }
+      ],
+      "Thursday": [
+        {
+          "subject": "Discrete Mathematical Structures",
+          "subjectCode": "MVJ22IS451",
+          "faculty": "Prof. Kucheruva Madhu",
+          "roomNumber": "R049",
+          "startTime": "08:00",
+          "endTime": "08:50"
+        },
+        {
+          "subject": "Database Management Systems",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Prof. Anupama P",
+          "roomNumber": "R049",
+          "startTime": "08:50",
+          "endTime": "09:40"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems Lab (B1)",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Prof. Anupama P",
+          "roomNumber": "DBMS-228",
+          "startTime": "10:10",
+          "endTime": "11:00",
+          "type": "lab"
+        },
+        {
+          "subject": "Advanced Java (B2)",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Venkatesh G",
+          "roomNumber": "R049",
+          "startTime": "11:00",
+          "endTime": "11:50"
+        },
+        {
+          "subject": "Break",
+          "startTime": "11:50",
+          "endTime": "12:00",
+          "type": "break"
+        },
+        {
+          "subject": "Advanced Java (R)",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Venkatesh G",
+          "roomNumber": "R049",
+          "startTime": "12:00",
+          "endTime": "12:50"
+        },
+        {
+          "subject": "Lunch Break",
+          "startTime": "12:50",
+          "endTime": "13:40",
+          "type": "lunch"
+        },
+        {
+          "subject": "Database Management Systems",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Prof. Anupama P",
+          "roomNumber": "R049",
+          "startTime": "13:40",
+          "endTime": "14:30"
+        },
+        {
+          "subject": "Advanced Java",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Venkatesh G",
+          "roomNumber": "R049",
+          "startTime": "14:30",
+          "endTime": "15:20"
+        }
+      ],
+      "Friday": [
+        {
+          "subject": "Advanced Java",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Venkatesh G",
+          "roomNumber": "R049",
+          "startTime": "08:00",
+          "endTime": "08:50"
+        },
+        {
+          "subject": "Analysis & Design of Algorithms (R)",
+          "subjectCode": "MVJ22IS41",
+          "faculty": "Prof. Anu K M",
+          "roomNumber": "R049",
+          "startTime": "08:50",
+          "endTime": "09:40"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Database Management Systems",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Prof. Anupama P",
+          "roomNumber": "R049",
+          "startTime": "10:10",
+          "endTime": "11:00"
+        },
+        {
+          "subject": "Counselling",
+          "roomNumber": "R049",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "type": "counselling"
+        },
+        {
+          "subject": "Break",
+          "startTime": "11:50",
+          "endTime": "12:00",
+          "type": "break"
+        },
+        {
+          "subject": "Counselling",
+          "roomNumber": "R049",
+          "startTime": "12:00",
+          "endTime": "12:50",
+          "type": "counselling"
+        },
+        {
+          "subject": "Lunch Break",
+          "startTime": "12:50",
+          "endTime": "13:40",
+          "type": "lunch"
+        },
+        {
+          "subject": "Biology for Engineers",
+          "subjectCode": "MVJ22BI47",
+          "faculty": "Prof. Nandana R",
+          "roomNumber": "R049",
+          "startTime": "13:40",
+          "endTime": "14:30"
+        },
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "subjectCode": "MVJ22IS41",
+          "faculty": "Prof. Anu K M",
+          "roomNumber": "R049",
+          "startTime": "14:30",
+          "endTime": "15:20"
+        }
+      ]
+    },
+    "ISE 4B": {
+      "Monday": [
+        {
+          "subject": "Advanced Java",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Kavitha C S",
+          "roomNumber": "R048",
+          "startTime": "08:00",
+          "endTime": "08:50"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "subjectCode": "MVJ22IS451",
+          "faculty": "Prof. Shreevarsha",
+          "roomNumber": "R048",
+          "startTime": "08:50",
+          "endTime": "09:40"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "subjectCode": "MVJ22IS41",
+          "faculty": "Dr. Kumar R",
+          "roomNumber": "R048",
+          "startTime": "10:10",
+          "endTime": "11:00"
+        },
+        {
+          "subject": "Database Management Systems",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Dr. Sinsha P S",
+          "roomNumber": "R048",
+          "startTime": "11:00",
+          "endTime": "11:50"
+        },
+        {
+          "subject": "Break",
+          "startTime": "11:50",
+          "endTime": "12:00",
+          "type": "break"
+        },
+        {
+          "subject": "Discrete Mathematical Structures (R)",
+          "subjectCode": "MVJ22IS451",
+          "faculty": "Prof. Shreevarsha",
+          "roomNumber": "R048",
+          "startTime": "12:00",
+          "endTime": "12:50"
+        },
+        {
+          "subject": "Lunch Break",
+          "startTime": "12:50",
+          "endTime": "13:40",
+          "type": "lunch"
+        },
+        {
+          "subject": "Library",
+          "roomNumber": "Library",
+          "startTime": "13:40",
+          "endTime": "14:30",
+          "type": "library"
+        },
+        {
+          "subject": "Skill Development Hour",
+          "roomNumber": "R048",
+          "startTime": "14:30",
+          "endTime": "15:20",
+          "type": "activity"
+        }
+      ],
+      "Tuesday": [
+        {
+          "subject": "Database Management Systems",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Dr. Sinsha P S",
+          "roomNumber": "R048",
+          "startTime": "08:00",
+          "endTime": "08:50"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "subjectCode": "MVJ22IS451",
+          "faculty": "Prof. Shreevarsha",
+          "roomNumber": "R048",
+          "startTime": "08:50",
+          "endTime": "09:40"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "subjectCode": "MVJ22IS41",
+          "faculty": "Dr. Kumar R",
+          "roomNumber": "R048",
+          "startTime": "10:10",
+          "endTime": "11:00"
+        },
+        {
+          "subject": "AEC Vertical Level II",
+          "subjectCode": "MVJ22AXYYL",
+          "faculty": "Dr. Shreevarsha",
+          "roomNumber": "R048",
+          "startTime": "11:00",
+          "endTime": "11:50"
+        },
+        {
+          "subject": "Break",
+          "startTime": "11:50",
+          "endTime": "12:00",
+          "type": "break"
+        },
+        {
+          "subject": "Advanced Java",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Kavitha C S",
+          "roomNumber": "R048",
+          "startTime": "12:00",
+          "endTime": "12:50"
+        },
+        {
+          "subject": "Lunch Break",
+          "startTime": "12:50",
+          "endTime": "13:40",
+          "type": "lunch"
+        },
+        {
+          "subject": "AEC Vertical Level II",
+          "subjectCode": "MVJ22AXYYL",
+          "faculty": "Dr. Shreevarsha",
+          "roomNumber": "R048",
+          "startTime": "13:40",
+          "endTime": "14:30"
+        },
+        {
+          "subject": "Biology for Engineers",
+          "subjectCode": "MVJ22BI47",
+          "faculty": "Prof. Shagina P K",
+          "roomNumber": "R048",
+          "startTime": "14:30",
+          "endTime": "15:20"
+        }
+      ],
+      "Wednesday": [
+        {
+          "subject": "Universal Human Values",
+          "subjectCode": "MVJ22UHV48",
+          "faculty": "Prof. Nandana R",
+          "roomNumber": "R048",
+          "startTime": "08:00",
+          "endTime": "08:50"
+        },
+        {
+          "subject": "Database Management Systems (R)",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Dr. Sinsha P S",
+          "roomNumber": "R048",
+          "startTime": "08:50",
+          "endTime": "09:40"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Advanced Java (B1)",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Kavitha C S",
+          "roomNumber": "R048",
+          "startTime": "10:10",
+          "endTime": "11:00"
+        },
+        {
+          "subject": "Analysis & Design of Algorithms Lab (B2)",
+          "subjectCode": "MVJ22ISL44",
+          "faculty": "Prof. Anu K M",
+          "roomNumber": "ADA-227",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "type": "lab"
+        },
+        {
+          "subject": "Break",
+          "startTime": "11:50",
+          "endTime": "12:00",
+          "type": "break"
+        },
+        {
+          "subject": "Analysis & Design of Algorithms",
+          "subjectCode": "MVJ22IS41",
+          "faculty": "Dr. Kumar R",
+          "roomNumber": "R048",
+          "startTime": "12:00",
+          "endTime": "12:50"
+        },
+        {
+          "subject": "Lunch Break",
+          "startTime": "12:50",
+          "endTime": "13:40",
+          "type": "lunch"
+        },
+        {
+          "subject": "Library",
+          "roomNumber": "Library",
+          "startTime": "13:40",
+          "endTime": "14:30",
+          "type": "library"
+        },
+        {
+          "subject": "Biology for Engineers",
+          "subjectCode": "MVJ22BI47",
+          "faculty": "Prof. Shagina P K",
+          "roomNumber": "R048",
+          "startTime": "14:30",
+          "endTime": "15:20"
+        }
+      ],
+      "Thursday": [
+        {
+          "subject": "Database Management Systems Lab (B2)",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Dr. Sinsha P S",
+          "roomNumber": "DBMS-228",
+          "startTime": "08:00",
+          "endTime": "08:50",
+          "type": "lab"
+        },
+        {
+          "subject": "Analysis & Design of Algorithms Lab (B1)",
+          "subjectCode": "MVJ22ISL44",
+          "faculty": "Prof. Anu K M",
+          "roomNumber": "ADA-227",
+          "startTime": "08:50",
+          "endTime": "09:40",
+          "type": "lab"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Discrete Mathematical Structures",
+          "subjectCode": "MVJ22IS451",
+          "faculty": "Prof. Shreevarsha",
+          "roomNumber": "R048",
+          "startTime": "10:10",
+          "endTime": "11:00"
+        },
+        {
+          "subject": "Counselling",
+          "roomNumber": "R048",
+          "startTime": "11:00",
+          "endTime": "11:50",
+          "type": "counselling"
+        },
+        {
+          "subject": "Break",
+          "startTime": "11:50",
+          "endTime": "12:00",
+          "type": "break"
+        },
+        {
+          "subject": "Advanced Java (R)",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Kavitha C S",
+          "roomNumber": "R048",
+          "startTime": "12:00",
+          "endTime": "12:50"
+        },
+        {
+          "subject": "Lunch Break",
+          "startTime": "12:50",
+          "endTime": "13:40",
+          "type": "lunch"
+        },
+        {
+          "subject": "Database Management Systems",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Dr. Sinsha P S",
+          "roomNumber": "R048",
+          "startTime": "13:40",
+          "endTime": "14:30"
+        },
+        {
+          "subject": "Advanced Java",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Kavitha C S",
+          "roomNumber": "R048",
+          "startTime": "14:30",
+          "endTime": "15:20"
+        }
+      ],
+      "Friday": [
+        {
+          "subject": "Advanced Java",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Kavitha C S",
+          "roomNumber": "R048",
+          "startTime": "08:00",
+          "endTime": "08:50"
+        },
+        {
+          "subject": "Analysis & Design of Algorithms (R)",
+          "subjectCode": "MVJ22IS41",
+          "faculty": "Dr. Kumar R",
+          "roomNumber": "R048",
+          "startTime": "08:50",
+          "endTime": "09:40"
+        },
+        {
+          "subject": "Break",
+          "startTime": "09:40",
+          "endTime": "10:10",
+          "type": "break"
+        },
+        {
+          "subject": "Advanced Java (B2)",
+          "subjectCode": "MVJ22IS42",
+          "faculty": "Prof. Kavitha C S",
+          "roomNumber": "R048",
+          "startTime": "10:10",
+          "endTime": "11:00"
+        },
+        {
+          "subject": "Database Management Systems (B1)",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Dr. Sinsha P S",
+          "roomNumber": "R048",
+          "startTime": "11:00",
+          "endTime": "11:50"
+        },
+        {
+          "subject": "Break",
+          "startTime": "11:50",
+          "endTime": "12:00",
+          "type": "break"
+        },
+        {
+          "subject": "Biology for Engineers",
+          "subjectCode": "MVJ22BI47",
+          "faculty": "Prof. Shagina P K",
+          "roomNumber": "R048",
+          "startTime": "12:00",
+          "endTime": "12:50"
+        },
+        {
+          "subject": "Lunch Break",
+          "startTime": "12:50",
+          "endTime": "13:40",
+          "type": "lunch"
+        },
+        {
+          "subject": "Project Hour",
+          "roomNumber": "R048",
+          "startTime": "13:40",
+          "endTime": "14:30",
+          "type": "activity"
+        },
+        {
+          "subject": "Database Management Systems",
+          "subjectCode": "MVJ22IS43",
+          "faculty": "Dr. Sinsha P S",
+          "roomNumber": "R048",
+          "startTime": "14:30",
+          "endTime": "15:20"
+        }
+      ]
+    }
+  },
+  "timetableImages": {
+    "ISE 4A": "",
+    "ISE 4B": ""
+  },
+  "resources": [],
+  "announcements": [
+    {
+      "_id": "000000000000000000000401",
+      "title": "Welcome to ISE Nexus",
+      "content": "Platform is active for students and faculty.",
+      "audience": "all",
+      "createdAt": "2026-03-17T00:00:00.000Z",
+      "createdBy": {
+        "name": "Department Admin",
+        "role": "department_admin"
+      }
+    }
+  ],
+  "assignments": [
+    {
+      "_id": "0000000000000000000000c9",
+      "title": "Teacher Post Assignment",
+      "subject": "000000000000000000000201",
+      "deadline": "2030-01-01T10:00:00.000Z",
+      "section": "ISE 4A",
+      "description": "desc",
+      "createdBy": "0000000000000000000000a3",
+      "createdAt": "2026-03-17T13:20:18.179Z"
+    }
+  ],
+  "submissions": [
+    {
+      "_id": "0000000000000000000000ca",
+      "assignment": "0000000000000000000000c9",
+      "student": "0000000000000000000000a5",
+      "studentName": "ISE Student Representative",
+      "studentEmail": "student.ise@mvjce.edu.in",
+      "section": "ISE 4A",
+      "fileUrl": "https://example.com/submitted",
+      "status": "submitted",
+      "feedback": ""
+    }
+  ],
+  "marks": [],
+  "notifications": [],
+  "attendance": []
+}
