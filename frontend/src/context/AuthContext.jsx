@@ -8,16 +8,39 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
+    let isMounted = true;
+    const bootstrapToken = localStorage.getItem('token');
+
+    if (!bootstrapToken) {
       setLoading(false);
-      return;
+      return () => { isMounted = false; };
     }
-    api.get('/auth/me').then((res) => setUser(res.data)).catch(() => localStorage.removeItem('token')).finally(() => setLoading(false));
+
+    api.get('/auth/me')
+      .then((res) => {
+        if (!isMounted) return;
+        setUser(res.data);
+      })
+      .catch(() => {
+        if (!isMounted) return;
+        if (localStorage.getItem('token') === bootstrapToken) {
+          localStorage.removeItem('token');
+          setUser(null);
+        }
+      })
+      .finally(() => {
+        if (!isMounted) return;
+        setLoading(false);
+      });
+
+    return () => { isMounted = false; };
   }, []);
 
-  const login = async (email, password) => {
-    const { data } = await api.post('/auth/login', { email, password });
+  const login = async (payloadOrEmail, password, portal = 'any') => {
+    const payload = typeof payloadOrEmail === 'object'
+      ? payloadOrEmail
+      : { email: payloadOrEmail, password, portal };
+    const { data } = await api.post('/auth/login', payload);
     localStorage.setItem('token', data.token);
     setUser(data.user);
   };
