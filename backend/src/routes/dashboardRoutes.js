@@ -8,10 +8,16 @@ import Resource from '../models/Resource.js';
 import User from '../models/User.js';
 import Notification from '../models/Notification.js';
 import { protect } from '../middleware/auth.js';
+import { isDatabaseReady } from '../config/db.js';
+import { offlineData } from '../config/offlineAcademicData.js';
 
 const router = express.Router();
 
 router.get('/overview', protect, async (req, res) => {
+  if (!isDatabaseReady()) {
+    return res.json(offlineData.getOverview(req.user));
+  }
+
   const sectionFilter = req.user.section;
   const [announcements, notifications] = await Promise.all([
     Announcement.find({ audience: { $in: ['all', sectionFilter] } }).sort({ createdAt: -1 }).limit(5),

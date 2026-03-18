@@ -18,6 +18,8 @@ import AdaLabPage from './pages/AdaLabPage';
 import TimetablePage from './pages/TimetablePage';
 import ForumPage from './pages/ForumPage';
 import NotificationsPage from './pages/NotificationsPage';
+import PeoplePage from './pages/PeoplePage';
+import AttendancePage from './pages/AttendancePage';
 
 function ProtectedLayout({ children, roles }) {
   return (
@@ -40,13 +42,15 @@ export default function App() {
         <Route path="/announcements" element={<ProtectedLayout><AnnouncementsPage /></ProtectedLayout>} />
         <Route path="/search" element={<ProtectedLayout><SearchPage /></ProtectedLayout>} />
         <Route path="/assignments" element={<ProtectedLayout><AssignmentsPage /></ProtectedLayout>} />
+        <Route path="/attendance" element={<ProtectedLayout><AttendancePage /></ProtectedLayout>} />
         <Route path="/resources" element={<ProtectedLayout><ResourcesPage /></ProtectedLayout>} />
         <Route path="/faculty" element={<ProtectedLayout><FacultyPage /></ProtectedLayout>} />
         <Route path="/adalab" element={<ProtectedLayout><AdaLabPage /></ProtectedLayout>} />
         <Route path="/forum" element={<ProtectedLayout><ForumPage /></ProtectedLayout>} />
         <Route path="/notifications" element={<ProtectedLayout><NotificationsPage /></ProtectedLayout>} />
-        <Route path="/marks" element={<ProtectedLayout roles={['student']}><MarksPage /></ProtectedLayout>} />
-        <Route path="/admin" element={<ProtectedLayout roles={['department_admin', 'hod', 'admin']}><AdminPage /></ProtectedLayout>} />
+        <Route path="/people" element={<ProtectedLayout roles={['department_admin', 'hod', 'admin', 'principal']}><PeoplePage /></ProtectedLayout>} />
+        <Route path="/marks" element={<ProtectedLayout><MarksPage /></ProtectedLayout>} />
+        <Route path="/admin" element={<ProtectedLayout roles={['teacher', 'lab_instructor', 'department_admin', 'hod', 'admin', 'principal']}><AdminPage /></ProtectedLayout>} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AuthProvider>
