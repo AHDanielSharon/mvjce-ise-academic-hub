@@ -50,6 +50,7 @@ export default function AppLayout({ children }) {
     { to: '/timetable', label: 'Smart Timetable', icon: CalendarDays },
     { to: '/subjects', label: 'Subject Hub', icon: BookOpen },
     { to: '/assignments', label: 'Assignments', icon: BookOpen },
+    { to: '/attendance', label: 'Attendance', icon: BookOpen },
     { to: '/resources', label: 'Resource Library', icon: BookOpen },
     { to: '/faculty', label: 'Faculty Directory', icon: Users },
     { to: '/forum', label: 'Doubt Forum', icon: MessageSquare },

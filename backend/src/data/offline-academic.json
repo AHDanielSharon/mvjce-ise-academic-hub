@@ -795,6 +795,10 @@
       ]
     }
   },
+  "timetableImages": {
+    "ISE 4A": "",
+    "ISE 4B": ""
+  },
   "resources": [],
   "announcements": [
     {
@@ -834,10 +838,7 @@
       "feedback": ""
     }
   ],
-  "timetableImages": {
-    "ISE 4A": "",
-    "ISE 4B": ""
-  },
   "marks": [],
-  "notifications": []
+  "notifications": [],
+  "attendance": []
 }

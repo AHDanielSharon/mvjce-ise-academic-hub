@@ -19,6 +19,7 @@ import TimetablePage from './pages/TimetablePage';
 import ForumPage from './pages/ForumPage';
 import NotificationsPage from './pages/NotificationsPage';
 import PeoplePage from './pages/PeoplePage';
+import AttendancePage from './pages/AttendancePage';
 
 function ProtectedLayout({ children, roles }) {
   return (
@@ -41,6 +42,7 @@ export default function App() {
         <Route path="/announcements" element={<ProtectedLayout><AnnouncementsPage /></ProtectedLayout>} />
         <Route path="/search" element={<ProtectedLayout><SearchPage /></ProtectedLayout>} />
         <Route path="/assignments" element={<ProtectedLayout><AssignmentsPage /></ProtectedLayout>} />
+        <Route path="/attendance" element={<ProtectedLayout><AttendancePage /></ProtectedLayout>} />
         <Route path="/resources" element={<ProtectedLayout><ResourcesPage /></ProtectedLayout>} />
         <Route path="/faculty" element={<ProtectedLayout><FacultyPage /></ProtectedLayout>} />
         <Route path="/adalab" element={<ProtectedLayout><AdaLabPage /></ProtectedLayout>} />

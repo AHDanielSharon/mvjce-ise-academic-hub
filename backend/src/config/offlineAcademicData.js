@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { getCurrentAndNextClass, getEffectiveDay } from '../utils/timetable.js';
+import { approvedStudents, normalizeUsn } from './studentRegistry.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -68,7 +69,8 @@ const buildDefaultStore = () => ({
   assignments: [],
   submissions: [],
   marks: [],
-  notifications: []
+  notifications: [],
+  attendance: []
 });
 
 let store = buildDefaultStore();
@@ -199,6 +201,50 @@ export const offlineData = {
     return item;
   },
   getNotifications: (user) => (store.notifications || []).filter((n) => (n.recipientRole === 'all' || n.recipientRole === user.role) && (n.recipientSection === 'all' || n.recipientSection === user.section)),
+
+  getAttendanceRoster: (section) => {
+    if (section === 'ISE 4A') return approvedStudents.map((s) => ({ usn: normalizeUsn(s.usn), name: s.name }));
+    const fromMarks = (store.marks || []).filter((m) => m.studentSection === section).map((m) => ({ usn: normalizeUsn(m.student), name: m.studentName }));
+    const uniq = new Map(fromMarks.map((s) => [s.usn, s]));
+    return [...uniq.values()];
+  },
+  markAttendance: ({ section, subject, date, entries }, user) => {
+    if (!store.attendance) store.attendance = [];
+    const idx = store.attendance.findIndex((a) => a.section === section && a.subject === subject && a.date === date);
+    const item = {
+      _id: idx >= 0 ? store.attendance[idx]._id : makeId(),
+      section,
+      subject,
+      date,
+      takenBy: user._id,
+      entries: (entries || []).map((e) => ({ studentUsn: normalizeUsn(e.studentUsn), studentName: e.studentName, present: Boolean(e.present) }))
+    };
+    if (idx >= 0) store.attendance[idx] = item; else store.attendance.unshift(item);
+    save();
+    addNotification({ title: 'Attendance Updated', message: `${subject} attendance added for ${section} (${date}).`, type: 'attendance', recipientRole: 'student', recipientSection: section });
+    return item;
+  },
+  getAttendanceBySection: (section, subject = '') => (store.attendance || []).filter((a) => a.section === section && (!subject || a.subject === subject)),
+  getStudentAttendanceSummary: (user) => {
+    const usn = normalizeUsn(user.usn || '');
+    if (!usn) return { overall: { present: 0, total: 0, percentage: 0 }, subjects: [] };
+    const rows = (store.attendance || []).filter((a) => a.section === user.section);
+    const totals = new Map();
+    let total = 0;
+    let present = 0;
+    for (const row of rows) {
+      const found = (row.entries || []).find((e) => normalizeUsn(e.studentUsn) === usn);
+      if (!found) continue;
+      total += 1;
+      if (found.present) present += 1;
+      if (!totals.has(row.subject)) totals.set(row.subject, { subject: row.subject, present: 0, total: 0 });
+      const bucket = totals.get(row.subject);
+      bucket.total += 1;
+      if (found.present) bucket.present += 1;
+    }
+    const subjects = [...totals.values()].map((s) => ({ ...s, percentage: s.total ? Math.round((s.present / s.total) * 100) : 0 }));
+    return { overall: { present, total, percentage: total ? Math.round((present / total) * 100) : 0 }, subjects };
+  },
   getAssignments: (user) => {
     const list = user.role === 'student' ? store.assignments.filter((a) => a.section === user.section) : store.assignments;
     const subjectMap = new Map(store.subjects.map((s) => [s._id, s]));
@@ -255,7 +301,7 @@ export const offlineData = {
     const notifications = (store.notifications || []).slice(0, 10);
     if (user.role === 'student') {
       const announcements = store.announcements.filter((a) => a.audience === 'all' || a.audience === user.section);
-      return { role: 'student', announcements, notifications, assignments: store.assignments.filter((a) => a.section === user.section), marks: offlineData.getMyMarks(user), mode: 'offline' };
+      return { role: 'student', announcements, notifications, assignments: store.assignments.filter((a) => a.section === user.section), marks: offlineData.getMyMarks(user), attendance: offlineData.getStudentAttendanceSummary(user), mode: 'offline' };
     }
     if (['teacher', 'lab_instructor'].includes(user.role)) {
       const announcements = store.announcements.filter((a) => a.audience === 'all' || a.audience === user.section);
