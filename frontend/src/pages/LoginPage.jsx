@@ -2,6 +2,12 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
+const demoAccounts = [
+  { label: 'Student', email: 'student.ise@mvjce.edu.in', password: 'password123' },
+  { label: 'Teacher', email: 'anupama.p@mvjce.edu.in', password: 'password123' },
+  { label: 'HOD', email: 'hod.ise@mvjce.edu.in', password: 'password123' }
+];
+
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
