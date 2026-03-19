@@ -1,0 +1,112 @@
+[
+  {
+    "_id": "00000000000000000000000b",
+    "name": "Prof. Venkatesh G",
+    "email": "venkatesh.g@mvjce.edu.in",
+    "password": "VEN-G-2026",
+    "role": "teacher",
+    "section": "ISE 4A",
+    "designation": "Assistant Professor",
+    "usn": "",
+    "signature": ""
+  },
+  {
+    "_id": "00000000000000000000000d",
+    "name": "Prof. Nandana R",
+    "email": "nandana.r@mvjce.edu.in",
+    "password": "NAN-R-2026",
+    "role": "teacher",
+    "section": "ISE 4A",
+    "designation": "Assistant Professor",
+    "usn": "",
+    "signature": ""
+  },
+  {
+    "_id": "00000000000000000000000e",
+    "name": "Prof. Kocheruvu Madhu",
+    "email": "kocheruvu.madhu@mvjce.edu.in",
+    "password": "KOC-M-2026",
+    "role": "teacher",
+    "section": "ISE 4A",
+    "designation": "Assistant Professor (Maths)",
+    "usn": "",
+    "signature": ""
+  },
+  {
+    "_id": "0000000000000000000000a1",
+    "name": "ISE Department Admin",
+    "email": "admin.ise@mvjce.edu.in",
+    "password": "password123",
+    "role": "department_admin",
+    "section": "ISE 4A",
+    "designation": "Department Administrator",
+    "usn": "",
+    "signature": ""
+  },
+  {
+    "_id": "0000000000000000000000a2",
+    "name": "Dr. HOD ISE",
+    "email": "hod.ise@mvjce.edu.in",
+    "password": "password123",
+    "role": "hod",
+    "section": "ISE 4A",
+    "designation": "Head of Department",
+    "usn": "",
+    "signature": ""
+  },
+  {
+    "_id": "0000000000000000000000a6",
+    "name": "Principal MVJCE",
+    "email": "principal@mvjce.edu.in",
+    "password": "password123",
+    "role": "principal",
+    "section": "ISE 4A",
+    "designation": "Principal",
+    "usn": "",
+    "signature": ""
+  },
+  {
+    "_id": "0000000000000000000000a3",
+    "name": "Prof. Anupama P",
+    "email": "anupama.p@mvjce.edu.in",
+    "password": "password123",
+    "role": "teacher",
+    "section": "ISE 4A",
+    "designation": "Associate Professor",
+    "usn": "",
+    "signature": ""
+  },
+  {
+    "_id": "0000000000000000000000a4",
+    "name": "Prof. Anu K M",
+    "email": "anu.km@mvjce.edu.in",
+    "password": "password123",
+    "role": "lab_instructor",
+    "section": "ISE 4B",
+    "designation": "Lab Instructor",
+    "usn": "",
+    "signature": ""
+  },
+  {
+    "_id": "0000000000000000000000a5",
+    "name": "ISE Student Representative",
+    "email": "student.ise@mvjce.edu.in",
+    "password": "password123",
+    "role": "student",
+    "section": "ISE 4A",
+    "designation": "Student",
+    "usn": "",
+    "signature": ""
+  },
+  {
+    "_id": "0000000000000000000000c9",
+    "name": "LIKITH GOWDA T K",
+    "email": "1mj24is042@ise4a.mvjce",
+    "password": "123456",
+    "role": "student",
+    "section": "ISE 4A",
+    "designation": "Student",
+    "usn": "1MJ24IS042",
+    "signature": "✍ LIKITH GOWDA T K"
+  }
+]

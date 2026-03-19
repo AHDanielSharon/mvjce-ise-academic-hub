@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: mvjce-ise-academic-hub
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: node backend/src/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
