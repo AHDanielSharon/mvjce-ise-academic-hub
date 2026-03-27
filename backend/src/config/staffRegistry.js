@@ -28,7 +28,7 @@ export const staffCodes = [
   },
   {
     code: 'ANU-P-2026',
-    name: 'Prof. Anupama P',
+    name: 'Prof. Anupama P(Associate Professor & Class Teacher)',
     role: 'teacher',
     section: 'ISE 4A',
     designation: 'Associate Professor & Class Teacher',
